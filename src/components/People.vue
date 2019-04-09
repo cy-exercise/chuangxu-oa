@@ -9,7 +9,7 @@
       </div>
       <div class="box" style="margin-top: .8rem">
         <div class="people">
-          <img class="avatar" src="http://img5.duitang.com/uploads/item/201409/23/20140923094045_BNYji.thumb.700_0.png" alt="">
+          <img class="avatar" src="/static/images/avatar.png" alt="">
           <div class="nickname">
             微信昵称
           </div>

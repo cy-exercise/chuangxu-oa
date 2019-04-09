@@ -23,7 +23,7 @@
     </div>
 
     <div class="call-container">
-      <img src="http://img5.duitang.com/uploads/item/201409/23/20140923094045_BNYji.thumb.700_0.png" alt="">
+      <img src="/static/images/avatar.png" alt="">
       <div class="call-info-wrapper">
         <div class="name">Kimberly Hernandez</div>
         <div class="phone">电话：13423453431</div>
