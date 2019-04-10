@@ -10,6 +10,7 @@ import Withdraw from '@/components/Withdraw'
 import AddCard from '@/components/AddCard'
 import SelectItem from '@/components/SelectItem'
 import PriceSetting from '@/components/PriceSetting'
+import WithdrawInfo from '@/components/WithdrawInfo'
 
 Vue.use(Router)
 
@@ -59,6 +60,11 @@ export default new Router({
       path: '/price_setting',
       name: 'PriceSetting',
       component: PriceSetting
+    },
+    {
+      path: '/withdraw_info',
+      name: 'WithdrawInfo',
+      component: WithdrawInfo
     }
   ]
 })
