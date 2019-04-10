@@ -9,9 +9,10 @@ import 'mint-ui/lib/style.css'
 
 import './assets/style/reset.css'
 import './assets/style/border.css'
+import axios from 'axios'
 
 Vue.config.productionTip = false;
-
+Vue.prototype.$ajax= axios
 Vue.use(MintUI)
 
 /* eslint-disable no-new */

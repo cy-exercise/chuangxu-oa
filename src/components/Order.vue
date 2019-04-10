@@ -26,9 +26,9 @@
       <img src="/static/images/avatar.png" alt="">
       <div class="call-info-wrapper">
         <div class="name">Kimberly Hernandez</div>
-        <div class="phone">电话：13423453431</div>
+        <div class="phone">电话：{{phone}}</div>
       </div>
-      <div class="call-button">打电话给他</div>
+      <div class="call-button" @click="callPhone(phone)">打电话给他</div>
     </div>
 
     <!--我的报价-->
@@ -38,7 +38,7 @@
     </div>
 
     <div class="submit-box">
-      <div class="submit-button" v-bind:class="{active: isActive}">立即报价</div>
+      <div class="submit-button" v-bind:class="{active: isActive}" @click="do_quote">立即报价</div>
     </div>
 
   </div>
@@ -54,12 +54,13 @@
         selected: true,
         price: '',
         price_str: '',
-        isActive: false
+        isActive: false,
+        phone: '13423453431'
       }
     },
     methods: {
       handleClick() {
-        let _this = this
+        let _this = this;
         MessageBox.prompt('请输入金额', '我的报价').then(({ value, action }) => {
           _this.price_str = '￥' + value + '.00';
           _this.price = value
@@ -67,6 +68,20 @@
         });
       },
 
+      callPhone(phone) {
+        window.location.href = 'tel://' + phone
+      },
+
+      // 提交报价
+      do_quote() {
+        if (!this.isActive) return false;
+        let post = {
+          price: this.price
+        }
+        this.$ajax.post('https://api.github.com/users', post).then(function (response) {
+          console.log(response)
+        })
+      }
     }
   }
 </script>
@@ -135,7 +150,7 @@
   .logo {
     width:60px;
     height:60px;
-    margin: 0 auto;
+    margin-top: .6rem;
   }
   .call-container {
     position: relative;
