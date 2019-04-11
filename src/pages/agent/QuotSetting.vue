@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header">报价设置</div>
+    <Header :title="title" to="/" is_white="true"></Header>
     <div class="setting-wrapper">
       <div class="setting-title">选择报价方式</div>
       <div class="setting-way">
@@ -9,23 +9,34 @@
       </div>
       <div class="setting-percent">设置每个项目的百分比加价作为收成（10%~50%）</div>
       <input class="percent-input" type="text" v-model="percent">
-      <div class="button">保存</div>
+      <div class="button" @click="handleSave">保存</div>
     </div>
   </div>
 </template>
 
 <script>
+  import Header from "../common/Header"
   export default {
-    name: "PriceSetting",
+    name: "quotSetting",
+    components: {
+      Header
+    },
     data() {
       return {
         percent: '',
-        selected: 'default'
+        selected: 'default',
+        title: '报价设置'
       }
     },
     methods: {
-      handleClick: function (type) {
+      handleClick(type) {
         this.selected = type
+      },
+      handleSave() {
+        if(true) {
+          alert('保存成功')
+          this.$router.push('/agent')
+        }
       }
     }
   }
