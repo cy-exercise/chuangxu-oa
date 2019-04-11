@@ -22,7 +22,9 @@ export default {
 #app {
   height: 100%;
 }
-body{
-  height: 100%;
+/* 移动端禁止上下滑动出现空白 */
+body, html {
+  width:100%;
+  height:100%;
 }
 </style>

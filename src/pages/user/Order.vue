@@ -1,67 +1,67 @@
 <template>
-    <div style="height: 100%">
-      <Header :title="title" to="/agent"></Header>
-      <div class="wrapper">
-        <ul class="quote-item">
-          <li @click="handleRoute">
-            <div class="order-title border-bottom">
-              <span class="title">论文润色</span>
-              <span class="price">￥3409.00</span>
-            </div>
-            <div class="people">
-              <img src="/static/images/avatar.png" alt="">
-              <span class="name">Kimberly Hernandez</span>
-              <span class="goto-price" v-show="is_show">{{action_name}}
+  <div style="height: 100%">
+    <Header :title="title" to="/user"></Header>
+    <div class="wrapper">
+      <ul class="quote-item">
+        <li @click="handleRoute">
+          <div class="order-title border-bottom">
+            <span class="title">论文润色</span>
+            <span class="price">￥3409.00</span>
+          </div>
+          <div class="people">
+            <img src="/static/images/avatar.png" alt="">
+            <span class="name">Kimberly Hernandez</span>
+            <span class="goto-price">{{action_name}}
                 <img src="/static/images/arrow_right.png" alt="">
               </span>
-            </div>
-          </li>
-          <li @click="handleRoute">
-            <div class="order-title border-bottom">
-              <span class="title">论文润色</span>
-              <span class="price">￥3409.00</span>
-            </div>
-            <div class="people">
-              <img src="/static/images/avatar.png" alt="">
-              <span class="name">Kimberly Hernandez</span>
-              <span class="goto-price" v-show="is_show">{{action_name}}
+          </div>
+        </li>
+        <li @click="handleRoute">
+          <div class="order-title border-bottom">
+            <span class="title">论文润色</span>
+            <span class="price">￥3409.00</span>
+          </div>
+          <div class="people">
+            <img src="/static/images/avatar.png" alt="">
+            <span class="name">Kimberly Hernandez</span>
+            <span class="goto-price">{{action_name}}
                 <img src="/static/images/arrow_right.png" alt="">
               </span>
-              <span class="complete-content" v-show="complete_show">2018/03/15</span>
-            </div>
-          </li>
-        </ul>
-      </div>
+          </div>
+        </li>
+      </ul>
     </div>
+  </div>
 </template>
 
 <script>
   import Header from '../common/Header'
   export default {
-    name: "OrderQuote",
+    name: "UserOrder",
     components: {
       Header
     },
     data() {
       return {
-        action_name: '开始报价',
-        action_url: '/agent/order',
+        action_name: '去付款',
+        action_url: '/user/order',
         url_map: {
-          wait: '/agent/order',
-          doing: '/agent/order_info',
-          done: '/agent/order_complete'
+          wait: '/user/order_pay',
+          doing: '/user/item_info/doing',
+          done: '/user/item_info/complete'
         },
         name_map: {
-          wait: '开始报价',
-          doing: '详情'
+          wait: '去付款',
+          doing: '查看详情',
+          done: '查看详情',
         },
         is_show: false,
         complete_show: true,
-        title: '待报价',
+        title: '待报价  (234)',
         title_map: {
-          wait: '待报价',
+          wait: '待付款',
           doing: '进行中',
-          done: '已完成'
+          done: '完成的'
         }
       }
     },
@@ -77,13 +77,6 @@
 
         if (this.name_map[status]) {
           this.action_name = this.name_map[status]
-        }
-        if (status == 'doing' || status === 'wait') {
-          this.is_show = true
-          this.complete_show = false
-        } else {
-          this.is_show = false
-          this.complete_show = true
         }
 
         if (this.title_map[status]) {

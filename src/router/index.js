@@ -18,6 +18,14 @@ import QuoteSuccess from '@/pages/agent/QuoteSuccess'
 import Bill from '@/pages/agent/Bill'
 
 // user
+import User from '@/pages/user/User'
+import UserOrder from '@/pages/user/Order'
+import OrderPay from '@/pages/user/OrderPay'
+import PaySuccess from '@/pages/user/PaySuccess'
+import ItemInfo from '@/pages/user/ItemInfo'
+import Step from '@/pages/common/Step'
+
+// user
 
 Vue.use(Router)
 
@@ -27,6 +35,11 @@ export default new Router({
       path: '/select_item',
       name: 'SelectItem',
       component: SelectItem
+    },
+    {
+      path: '/step',
+      name: 'Step',
+      component: Step
     },
 
     // agent
@@ -103,5 +116,32 @@ export default new Router({
       name: 'Bill',
       component: Bill
     },
+
+    // user
+    {
+      path: '/user',
+      name: 'User',
+      component: User
+    },
+    {
+      path: '/user/order/:status',
+      name: 'UserOrder',
+      component: UserOrder
+    },
+    {
+      path: '/user/order_pay',
+      name: 'OrderPay',
+      component: OrderPay
+    },
+    {
+      path: '/user/pay_success',
+      name: 'PaySuccess',
+      component: PaySuccess
+    },
+    {
+      path: '/user/item_info/:status',
+      name: 'ItemInfo',
+      component: ItemInfo
+    }
   ]
 })
