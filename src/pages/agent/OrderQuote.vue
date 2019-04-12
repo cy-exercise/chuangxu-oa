@@ -78,7 +78,7 @@
         if (this.name_map[status]) {
           this.action_name = this.name_map[status]
         }
-        if (status == 'doing' || status === 'wait') {
+        if (status === 'doing' || status === 'wait') {
           this.is_show = true
           this.complete_show = false
         } else {

@@ -10,10 +10,12 @@ import 'mint-ui/lib/style.css'
 import './assets/style/reset.css'
 import './assets/style/border.css'
 import axios from 'axios'
+import VueCookies from 'vue-cookies'
 
 Vue.config.productionTip = false;
 Vue.prototype.$ajax= axios
 Vue.use(MintUI)
+Vue.use(VueCookies)
 
 /* eslint-disable no-new */
 new Vue({

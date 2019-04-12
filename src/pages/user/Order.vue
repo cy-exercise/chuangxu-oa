@@ -1,7 +1,8 @@
 <template>
-  <div style="height: 100%">
+  <div style="height: 100%" >
     <Header :title="title" to="/user"></Header>
-    <div class="wrapper">
+    <Empty v-show="show_empty"></Empty>
+    <div class="wrapper" v-show="!show_empty">
       <ul class="quote-item">
         <li @click="handleRoute">
           <div class="order-title border-bottom">
@@ -36,10 +37,12 @@
 
 <script>
   import Header from '../common/Header'
+  import Empty from '../common/Empty'
   export default {
     name: "UserOrder",
     components: {
-      Header
+      Header,
+      Empty
     },
     data() {
       return {
@@ -55,14 +58,13 @@
           doing: '查看详情',
           done: '查看详情',
         },
-        is_show: false,
-        complete_show: true,
         title: '待报价  (234)',
         title_map: {
           wait: '待付款',
           doing: '进行中',
           done: '完成的'
-        }
+        },
+        show_empty: false
       }
     },
     methods: {
@@ -82,10 +84,14 @@
         if (this.title_map[status]) {
           this.title = this.title_map[status]
         }
+      },
+      getItem() {
+        this.$ajax.get()
       }
     },
     mounted() {
-      this.init()
+      this.init();
+      this.getItem()
     }
   }
 </script>

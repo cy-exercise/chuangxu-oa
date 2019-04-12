@@ -41,7 +41,9 @@
         <div class="withdraw-money">XX银行(567345345434****2345)</div>
       </div>
     </div>
-    <div class="button">完成</div>
+    <router-link to="/agent">
+      <div class="button">完成</div>
+    </router-link>
   </div>
 </template>
 

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import SelectItem from '@/pages/common/SelectItem'
+import Percent from '@/pages/common/Percent'
 
 // agent
 import Agent from '@/pages/agent/Agent'
@@ -40,6 +41,11 @@ export default new Router({
       path: '/step',
       name: 'Step',
       component: Step
+    },
+    {
+      path: '/percent',
+      name: 'Percent',
+      component: Percent
     },
 
     // agent

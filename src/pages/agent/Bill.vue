@@ -1,43 +1,53 @@
 <template>
     <div class="wrapper">
       <Header :title="title" to="/agent/earnings" ></Header>
-      <div class="block-wrapper">
-        <div class="item ">
-          <div class="icon-wrapper">
+      <Empty v-show="empty_show" info="暂无零钱提现记录" icon="/static/images/bill_icon.png"></Empty>
+
+      <ul class="bill-list" v-show="!empty_show">
+        <li>
+          <div class="bill-icon">
             <img src="/static/images/wallet@2x.png" alt="">
           </div>
-          <div class="item-right border-bottom">
-            <div class="title">提现</div>
-            <div class="time">2019/4/12 08:24</div>
-            <span class="total">￥2500.00</span>
+          <div class="bill-content border-bottom">
+            <div class="block-title">
+              <div>
+                <div class="bill-title">提现</div>
+                <div class="bill-date">2019/4/12 08:24</div>
+              </div>
+            </div>
+            <div class="bill-money">￥2500.00</div>
           </div>
+        </li>
 
-        </div>
-        <div class="item ">
-          <div class="icon-wrapper">
+        <li>
+          <div class="bill-icon">
             <img src="/static/images/wallet@2x.png" alt="">
           </div>
-          <div class="item-right border-bottom">
-            <div class="title">提现</div>
-            <div class="time">2019/4/12 08:24</div>
-            <span class="total">￥2500.00</span>
+          <div class="bill-content border-bottom">
+            <div class="block-title">
+              <div class="bill-title">提现</div>
+              <div class="bill-date">2019/4/12 08:24</div>
+            </div>
+            <div class="bill-money">￥2500.00</div>
           </div>
-
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
 </template>
 
 <script>
   import Header from "../common/Header"
+  import Empty from '../common/Empty'
   export default {
     name: "Bill",
     components: {
-      Header
+      Header,
+      Empty
     },
     data() {
       return {
-        title: '账单'
+        title: '账单',
+        empty_show: false
       }
     },
     methods: {
@@ -59,51 +69,55 @@
     padding-left: .32rem;
     padding-right: .32rem;
   }
-  .item {
-    height: 1.45rem;
-    position: relative;
-  }
-  .icon-wrapper {
-    /*height: 1rem;*/
-    /*line-height: 1.45rem;*/
-    /*margin-right: .29rem;*/
-    display: inline-block;
-    margin-bottom: .7rem;
-  }
+
   .icon-wrapper img {
     height: .44rem;
     width: .4rem;
   }
-  .item-right {
+  .bill-list li {
+    height: 1.45rem;
+    line-height: 1.45rem;
+    background: #ffffff;
+    padding-right: .32rem;
+  }
+  .bill-icon {
+    float: left;
+    width: 1.05rem;
+    height: 1.45rem;
+    line-height: 1.45rem;
+    text-align: center;
+  }
+
+  .bill-icon img {
+    height: .44rem;
+    width: .4rem;
+  }
+  .bill-content {
+    float: right;
     height: 1.45rem;
     width: 6.13rem;
-    margin-left: .2rem;
-    display: inline-block;
   }
-  .item-right .title {
-    height: .42rem;
-    line-height: .42rem;
-    width: .6rem;
-    margin-top: .4rem;
-    margin-bottom: .1rem;
-
+  .block-title {
+    float: left;
+    height: 1.45rem;
   }
-  .time {
-    height: .33rem;
-    line-height: .33rem;
-    width: 2.12rem;
-    display: inline-block;
-  }
-  .total {
-    display: inline-block;
-    position: absolute;
-    bottom: .29rem;
-    height: .67rem;
-    line-height: .67rem;
-    right: 0;
+  .bill-money {
+    float: right;
     font-size: .48rem;
     font-weight: 500;
     color: #28B2FE;
-    float: right;
+  }
+  .bill-title {
+    height: .42rem;
+    line-height: .42rem;
+    margin-top: .4rem;
+    margin-bottom: .1rem;
+  }
+  .bill-date {
+    height: .33rem;
+    line-height: .33rem;
+    color: #B5B5B5;
+    font-size: .24rem;
+    font-weight: 400;
   }
 </style>

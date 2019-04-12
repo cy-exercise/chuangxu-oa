@@ -4,14 +4,15 @@
         <div class="title border-bottom"><img src="/static/images/x.png" alt="" @click="handleClose">选择提现到</div>
         <div class="select-item">
           <ul>
-            <li class="border-bottom" @click="addSelect">
+            <li class="border-bottom" @click="addSelect(card)" v-for="(card, index) in cards">
               <img src="/static/images/bank_card.png" alt="">
               <div class="item">
-                <div class="item-title">XX银行（567345345434****2345</div>
+                <div class="item-title">{{card.name}} ({{card.account}})</div>
                 <div class="description">一次性转账≤￥20000.00</div>
               </div>
             </li>
-            <li class="border-bottom" @click="addSelect">
+
+            <li class="border-bottom" @click="addSelect('wx')">
               <img src="/static/images/logo-wx.png" alt="">
               <div class="item">
                 <div class="item-title">微信</div>
@@ -41,12 +42,21 @@
     ],
     data() {
       return {
-
+          cards: [
+            {
+              name: 'xx银行',
+              account: '567345345434****2348'
+            },
+            {
+              name: 'xx银行',
+              account: '567345345434****2345'
+            }
+          ]
       }
     },
     methods: {
-      addSelect() {
-        this.$emit('addSelectEvent', [1,2,3])
+      addSelect(card) {
+        this.$emit('addSelectEvent', card)
       },
       handleClose() {
         this.$emit('handleCloseEvent')
@@ -63,7 +73,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background:rgba(0,0,0,0.4);;
+    background:rgba(0,0,0,0.4);
   }
   .select-box {
     width: 100%;

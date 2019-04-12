@@ -4,7 +4,7 @@
     <Header :title="title" to="/"></Header>
     <div class="container">
       <div class="withdraw-title border-bottom" @click="handleSelect">
-        <div class="wx" v-show="false">
+        <div class="wx" v-show="!show_card">
           <div class="title-left">
             <div class="title-left-item">
               <span>提现到</span>
@@ -15,20 +15,21 @@
           <div class="description">一次性转账≤￥5000.00</div>
           <img class="into-icon" src="/static/images/into_normal.png" alt="">
         </div>
-        <div class="card" v-show="true">
+        <div class="card" v-show="show_card">
           <span class="input-title">提现到</span>
           <img class="card-icon" src="/static/images/bank_card.png" alt="">
-          <span>银行卡 （567345345434****2345）</span>
+          <span>银行卡 ({{card.account}})</span>
+          <img class="into-icon" src="/static/images/into_normal.png" alt="">
         </div>
       </div>
       <div class="withdraw-input border-bottom">
         <div class="input-title">提现金额</div>
         <div class="imput-wrapper">
           <span>￥</span>
-          <input type="text" placeholder="" ref="withdraw">
+          <input type="text" placeholder="" ref="withdraw" v-model="total">
         </div>
       </div>
-      <div class="withdraw-submit">
+      <div class="withdraw-submit" :class="{submit: total}">
         <div class="submit-title">
           <span class="salary">工资余额￥2500.00，</span>
           <span class="all">全部提现</span>
@@ -51,15 +52,26 @@
     data() {
       return {
         showSelect: false,
-        title: '收益提现'
+        title: '收益提现',
+        show_card: false,
+        card: {
+          name: '',
+          account: ''
+        },
+        total: ''
       }
     },
     methods: {
       handleSelect() {
         this.showSelect = true
       },
-      addSelect(data) {
-        console.log(data);
+      addSelect(card) {
+        if (card === 'wx') {
+          this.show_card = false;
+        } else {
+          this.show_card = true;
+          this.card = card
+        }
         this.showSelect = false
       },
       handleColse()
@@ -67,6 +79,9 @@
         this.showSelect = false;
       },
       handleSubmit() {
+        if (!this.total) {
+          return false;
+        }
         // 先提交后台处理
         // 跳转
         if (true) {
@@ -185,7 +200,9 @@
     /*margin-top: .2rem;*/
     text-align: center;
   }
-
+  .submit .button {
+    background: #28B2FE;
+  }
   .submit-title {
     height: .76rem;
     line-height: .76rem;
