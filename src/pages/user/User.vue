@@ -57,9 +57,9 @@
       checkUserLogin() {
         this.$cookies.set('user', 'fdsfdsfs', 100);
         // console.log(this.$cookies.get('wx-user'));
-        this.$ajax.get('http://web.chuangxu.com/m/social_login/wexin').then(function (response) {
-          // console.log(response.data)
-        })
+        // this.$ajax.get('http://web.chuangxu.com/m/social_login/wexin').then(function (response) {
+        //   // console.log(response.data)
+        // })
       }
     },
     mounted() {

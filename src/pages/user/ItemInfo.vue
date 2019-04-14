@@ -111,6 +111,6 @@
   }
   .step-wrapper {
     background: #ffffff;
-    text-align: center;
+    padding-left: 1.64rem;
   }
 </style>

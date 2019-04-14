@@ -7,28 +7,7 @@
         <div class="price">￥3409.00</div>
       </div>
       <div class="step-wrapper">
-        <div class="title">项目进度</div>
-        <div class="message-wrapper">
-        <div class="message">
-          <div class="circle">
-            <img src="/static/images/time.png" alt="">
-          </div>
-          <div class="step-time">2018/12/29</div>
-          <span class="step-name">发起提现申请</span>
-          <div class="line-border">
-          </div>
-        </div>
-      </div>
-        <div class="message-wrapper">
-          <div class="message">
-            <div class="circle">
-              <img src="/static/images/circle_gray.png" alt="">
-            </div>
-            <div class="step-time">2018/12/29</div>
-            <span class="step-name">发起提现申请</span>
-
-          </div>
-        </div>
+        <Step></Step>
       </div>
       <div class="line"></div>
       <div class="item-info-wrapper">
@@ -69,10 +48,12 @@
 
 <script>
   import Header from "../common/Header"
+  import Step from "../common/Step"
   export default {
     name: "OrderInfo",
     components: {
-      Header
+      Header,
+      Step
     },
     data() {
       return {
@@ -203,7 +184,7 @@
 
   .message {
     height: 1rem;
-
+    border-left: .02rem dashed #64AA62;
   }
 
   .circle {

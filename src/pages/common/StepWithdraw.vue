@@ -1,14 +1,21 @@
 <template>
   <div class="step-block">
-    <div class="item-title">项目进度</div>
     <div class="step">
-      <div class="step-main step-border">
+      <div class="step-main step-border-green">
+        <div class="step-icon-wrapper step-gray">
+          <div class="step-icon-green"></div>
+          <!--<img src="/static/images/time.png" alt="">-->
+        </div>
+        <span class="step-title">发起提现申请</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-main step-border-gray">
         <div class="step-icon-wrapper step-doing">
           <div class="step-icon-img"></div>
           <!--<img src="/static/images/time.png" alt="">-->
         </div>
-        <span class="step-title">图表制作</span>
-        <span class="step-date">2018/12/29</span>
+        <span class="step-title">后台正在处理中</span>
       </div>
     </div>
     <div class="step-end">
@@ -17,8 +24,7 @@
           <div class="step-icon-gray"></div>
           <!--<img src="/static/images/time.png" alt="">-->
         </div>
-        <span class="step-title">图表制作</span>
-        <span class="step-date">2018/12/29</span>
+        <span class="step-title">每周星期五我们将统一发帐</span>
       </div>
     </div>
   </div>
@@ -47,18 +53,22 @@
     height: 1.09rem;
   }
   .step-border {
-    border-left: 1px dashed green;
+    border-left: 1px;
+    border-left-color: #64AA62;
   }
-  /*.step-icon {*/
-    /*position: absolute;*/
-    /*left: -.2rem;*/
-    /*top: 0;*/
-    /*height: .4rem;*/
-    /*width: .4rem;*/
-    /*background: url("/static/images/time.png");*/
-    /*background-repeat:no-repeat;*/
-    /*background-size:100% 100%;*/
-  /*}*/
+  .step-border-green {
+    border-left: 1px;
+    border-left-style: dashed;
+    border-left-color: #64AA62;
+  }
+  .step-border-gray {
+    border-left: 1px;
+    border-left-style: solid;
+    border-left-color: #B5B5B5;
+  }
+
+
+
   .step-icon-wrapper {
     /*height: .4rem;*/
     /*opacity:1;*/
@@ -71,7 +81,7 @@
     left: -.2rem;
   }
   .step-gray{
-    left: -.09rem;
+    left: -.1rem;
   }
   .step-icon-img {
     height: .4rem;
@@ -85,6 +95,12 @@
     width: .2rem;
     border-radius: .1rem;
     background: #B5B5B5;
+  }
+  .step-icon-green {
+    height: .2rem;
+    width: .2rem;
+    border-radius: .1rem;
+    background: #64AA62;
   }
   .step-icon img  {
     top: 0;
@@ -102,15 +118,7 @@
     /*line-height: .4rem;*/
     font-weight: 400;
   }
-  .step-date {
-    top: -.02rem;
-    position: absolute;
-    left: -1.82rem;
-    /*height: .4rem;*/
-    /*line-height: .4rem;*/
-    font-size: .28rem;
-    font-weight: 400;
-  }
+
   .step-end {
     height: .8rem;
     padding-left: 1.92rem;

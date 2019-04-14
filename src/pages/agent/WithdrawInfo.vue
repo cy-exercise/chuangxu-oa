@@ -1,36 +1,9 @@
 <template>
   <div>
     <div class="title">收益提现</div>
-    <div class="message-wrapper">
-      <div class="message">
-        <div class="circle">
-          <img src="/static/images/circle_green.png" alt="">
-        </div>
-        <span class="time">发起提现申请</span>
-        <div class="line-border">
-        </div>
-      </div>
-    </div>
-    <div class="message-wrapper">
-      <div class="message">
-        <div class="circle">
-          <img src="/static/images/time.png" alt="">
-        </div>
-        <span class="time">后台正在处理中</span>
-        <div class="line-border">
-        </div>
-      </div>
-    </div>
-    <div class="message-wrapper">
-      <div class="message">
-        <div class="circle">
-          <img src="/static/images/circle_gray.png" alt="">
-        </div>
-        <span class="time">每周星期五我们将统一发帐</span>
-        <div class="">
-        </div>
-      </div>
-    </div>
+     <div class="step-wrapper">
+       <StepWithdraw></StepWithdraw>
+     </div>
     <div class="info-wrapper">
       <div class="total-money border-top">
         <div class="withdraw-title">提现金额</div>
@@ -48,8 +21,12 @@
 </template>
 
 <script>
+  import  StepWithdraw from "../common/StepWithdraw";
   export default {
-    name: "WithdrawInfo"
+    name: "WithdrawInfo",
+    components: {
+      StepWithdraw
+    }
   }
 </script>
 
@@ -79,11 +56,29 @@
     float: left;
     margin-right: .2rem;
   }
-
+  .step-icon-img {
+    height: .4rem;
+    width: .4rem;
+    background: url("/static/images/time.png");
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+  }
+  .step-icon-gray {
+    height: .2rem;
+    width: .2rem;
+    border-radius: .1rem;
+    background: #B5B5B5;
+  }
   .circle img {
     width: .39rem;
     height: .39rem;
 
+  }
+  .step-icon-green {
+    height: .2rem;
+    width: .2rem;
+    border-radius: .1rem;
+    background: #64AA62;
   }
 
   .line-border {
@@ -136,5 +131,12 @@
   .bank-account {
     position: relative;
     height: .88rem;
+  }
+  .step-title {
+    font-size: .28rem;
+    font-weight: 400;
+    color: #B5B5B5;
+    height: .4rem;
+    line-height: .4rem;
   }
 </style>
