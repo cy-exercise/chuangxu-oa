@@ -130,12 +130,12 @@ export default new Router({
       component: User
     },
     {
-      path: '/user/order/:status',
+      path: '/user/order',
       name: 'UserOrder',
       component: UserOrder
     },
     {
-      path: '/user/order_pay',
+      path: '/user/order/:id/pay',
       name: 'OrderPay',
       component: OrderPay
     },

@@ -12,21 +12,21 @@
     <div class="space"></div>
     <div class="item-box">
       <div class="item-wrapper">
-        <div class="item" @click="handleRoute('/user/order/wait')">
+        <div class="item" @click="handleRoute(2)">
           <img class="item-img" src="/static/images/dollar@2x.png" alt="">
           <div class="item-right border-bottom">
             <span>待付款的项目</span>
             <img class="icon" src="/static/images/into_normal.png" alt="">
           </div>
         </div>
-        <div class="item" @click="handleRoute('/user/order/doing')">
+        <div class="item" @click="handleRoute(4)">
           <img class="item-img" src="/static/images/doing.png" alt="">
           <div class="item-right border-bottom">
             <span>进行中的项目</span>
             <img class="icon" src="/static/images/into_normal.png" alt="">
           </div>
         </div>
-        <div class="item" @click="handleRoute('/user/order/done')">
+        <div class="item" @click="handleRoute(5)">
           <img class="item-img" src="/static/images/completed.png" alt="">
           <div class="item-right border-bottom">
             <span>完成的项目</span>
@@ -47,12 +47,14 @@
     },
     data() {
       return {
-        selected: true
+        selected: true,
+        order_url: '/user/order'
       }
     },
     methods: {
-      handleRoute(url) {
-        this.$router.push(url)
+      handleRoute(status) {
+        // this.$router.push(url)
+        this.$router.push(this.order_url + '?status=' + status)
       },
       checkUserLogin() {
         this.$cookies.set('user', 'fdsfdsfs', 100);

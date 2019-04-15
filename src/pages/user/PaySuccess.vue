@@ -1,10 +1,6 @@
 <template>
   <div>
-    <mt-header fixed title="订单报价">
-      <router-link to="/" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>
+    <Header title="订单报价" to="/user"></Header>
     <div class="wrapper">
       <img src="/static/images/order_complete.png" alt="">
       <div class="complete-title">支付成功！</div>
@@ -13,13 +9,16 @@
         <div class="complete-botton">完成</div>
       </router-link>
     </div>
-
   </div>
 </template>
 
 <script>
+  import Header from '../common/Header'
   export default {
     name: "PaySuccess",
+    components: {
+      Header
+    },
     data() {
       return {
         to: '-1'
@@ -34,14 +33,6 @@
 </script>
 
 <style scoped>
-  .mint-header {
-    background: #EDEDED;
-    color: #515151;
-    font-size: .36rem;
-  }
-  >>> .mintui {
-    font-size: .4rem;
-  }
   .wrapper {
     text-align: center;
     padding: 0 .32rem;
