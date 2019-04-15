@@ -101,7 +101,7 @@
         let self = this;
         let agent_id = '91401923-c3c6-4ebf-9621-a99b8b90e4b2'
         let user_id = '91401923-c3c6-4ebf-9621-a99b8b90e4b1'
-        this.$ajax.get(`http://web.chuangxu.com/api/agent/${agent_id}/order` + `?status=${status}&page=${page}&meta=1&user_id=${user_id}`, config)
+        this.$ajax.get(`/agent/${agent_id}/order` + `?status=${status}&page=${page}&meta=1&user_id=${user_id}`, config)
           .then(function (response) {
             if (response.data.data.length !== 0) {
               self.projects = response.data.data.data

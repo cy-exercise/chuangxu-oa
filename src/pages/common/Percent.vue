@@ -5,7 +5,7 @@
       <div class="cover-layer" v-if="show"></div>
     </transition>
     <transition name="move">
-    <div class="percent-wrapper">
+    <div class="percent-wrapper" v-if="show">
       <div class="percent-head border-bottom">
         <div class="percent-title">设置项目的加价提成</div>
         <div class="percent-close" @click="handleClose">取消</div>
@@ -28,6 +28,11 @@
 <script>
   export default {
     name: "Percent",
+    props: {
+      show: {
+        default: false
+      }
+    },
     data() {
       return {
         percents: [
@@ -47,8 +52,7 @@
             num: '50%',
             selected: false
           }
-        ],
-        show: true
+        ]
       }
     },
     methods: {
@@ -136,17 +140,24 @@
   }
 
   .fade-enter-active, .fade-leave-active {
-    transition: opacity 5s;
+    transition: opacity .5s;
   }
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
 
+  .move-enter-active, .move-leave-active {
+    transition:all .3s linear;
+    transform: translate3d(0,0,0);
+  }
+  .move-enter, .move-leave-to {
+    transform: translate3d(0,100%,0);
+  }
   .move-transition{
-    transition:all 0.2s linear;
+    transition:all 1.8s linear;
     transform: translate3d(0,0,0);
   }
   .move-enter,.move-leave-to{
-    transform: translate3d(100%,0,0);
+    transform: translate3d(0,100%,0);
   }
 </style>

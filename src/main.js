@@ -17,6 +17,10 @@ Vue.prototype.$ajax= axios
 Vue.use(MintUI)
 Vue.use(VueCookies)
 
+// 设置axios全局默认值
+axios.defaults.baseURL = 'http://web.chuangxu.com'
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + VueCookies.get('access_token')
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
