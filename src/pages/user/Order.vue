@@ -94,16 +94,17 @@
           }
         };
         let self = this;
-        this.$ajax.get('http://web.chuangxu.com/api/project' + `?status=${status}`, config).then(function (response) {
-          //console.log(response.data)
-          if (response.data.data.length !== 0) {
-            self.order_list = response.data.data;
-            self.title  = self.title + `（${self.order_list.length})`
-          } else  {
-            self.show_empty = true;
-          }
-
-        })
+        this.$cookies.set('access_token', '5465fdsfdsflkjdsflkds');
+        // this.$ajax.get('http://web.chuangxu.com/api/project' + `?status=${status}`, config).then(function (response) {
+        //   //console.log(response.data)
+        //   if (response.data.data.length !== 0) {
+        //     self.order_list = response.data.data;
+        //     self.title  = self.title + `（${self.order_list.length})`
+        //   } else  {
+        //     self.show_empty = true;
+        //   }
+        //
+        // })
       }
     },
     mounted() {
