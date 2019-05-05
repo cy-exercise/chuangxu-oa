@@ -3,10 +3,10 @@
     <Header :title="title" to="/agent"></Header>
     <Empty v-show="show_empty"></Empty>
     <div class="wrapper" v-show="!show_empty">
-      <ul class="quote-item">
+      <ul class="quote-item" @scroll="handleScroll">
         <li @click="handleRoute" v-for="project in projects">
           <div class="order-title border-bottom">
-            <span class="title">{{project.project.title}}</span>
+            <span class="title">{{(project.project === null) ? '' : project.project.title}}</span>
             <span class="price">￥{{project.price}}</span>
           </div>
           <div class="people">
@@ -25,7 +25,7 @@
 <script>
   import Header from '../common/Header'
   import Empty from '../common/Empty'
-
+  import { Indicator } from 'mint-ui';
   export default {
     name: "OrderQuote",
     components: {
@@ -60,7 +60,11 @@
           doing: 4,
           done: 5
         },
-        isLoading: false
+        isLoading: false,
+        page: 1,
+        orders: [],
+        scloll:true,
+        pageTotal: ''
       }
     },
     methods: {
@@ -88,31 +92,49 @@
           this.title = this.title_map[status]
         }
       },
-      getItem() {
+      getItem(page = 1) {
         let _this = this
-        //this.$cookies.set('access_token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjI5NWI5MTY3NmM0MjBlNDZiNzM0ODhlYjMzMzk1ZDljODg3NWY4OGU0Njg4NTM1MTJmMjZmMThkZmZhODE1ZjVkNWQ2NzU1ZjU3ODJjZDMzIn0.eyJhdWQiOiI0IiwianRpIjoiMjk1YjkxNjc2YzQyMGU0NmI3MzQ4OGViMzMzOTVkOWM4ODc1Zjg4ZTQ2ODg1MzUxMmYyNmYxOGRmZmE4MTVmNWQ1ZDY3NTVmNTc4MmNkMzMiLCJpYXQiOjE1NTUyOTgyNDgsIm5iZiI6MTU1NTI5ODI0OCwiZXhwIjoxNTU2NTk0MjQ4LCJzdWIiOiI5MTQwMTkyMy1jM2M2LTRlYmYtOTYyMS1hOTliOGI5MGU0YjEiLCJzY29wZXMiOltdfQ.HN4ZEs80DZqGYOqSbwW8J8KvgXCTIio0bQJxWiR6_O8qr-cxnMs1Zd-xq-H2fWLcGswmEivb3CJXP9jj1sbdEsQ1u3x6kor4R7Cp18YkdsR60QIjyf54tjZWk0ibzjmM4RyoOA64m82-1Q8uRSjbFssP4YS8-UNjxN3Qj2t5sSjqG-JHIWGUyyoxwD5W9-Pd0bhU6SfJDlugtVTOkZYxoTO2fT0AKQX-9Nwnv9uQZTRStjCH-Bqm8O6s732ezDKgFX6OE6MTfgQSpyIG-kthFeX5MRML-Fv8xuTZNPVhyNEKtXIAM2Nn0o3YQRduq7OVNh7kaW6YMt0tZKjQzP8Qbwv8MqIVkQIVk6_KT-DghTEH_MRmQs_5EwU3M2VDqWOTYwEwNjSNm1uUp91WOHYX00lM1j2oZi68_dUMF5FmXlS18FiQmUC8GruakeTR114ZaZDUG9VYlviVZUGGWGMo7lX3OpkCaD8l5J4NFg-ir4X_1_MllTFTwiFxUza9Sg6W99N4tIdQfSqK1h2eflPzZhAX3bM1_kTfS7QuROiwuYT-gAaJJb7AhTQShGB6T7Y83nWvpL4RoMBZg1D8qi1l3FPyYaGXF69WkmZpi8X_f_tP5RrnBOOVWUM0lVm12S-lIk8ChsSeUZgC--R_pZz47CR3X75OfFL6db1SFRfBH7c')
-        let config = {
-          headers: {
-            Authorization: 'Bearer ' + this.$cookies.get('access_token')
-          }
-        };
         let status = this.status_map[this.$route.params.status];
-        let page = 1;
+
         let self = this;
         let agent_id = '91401923-c3c6-4ebf-9621-a99b8b90e4b2'
         let user_id = '91401923-c3c6-4ebf-9621-a99b8b90e4b1'
-        this.$ajax.get(`/agent/${agent_id}/order` + `?status=${status}&page=${page}&meta=1&user_id=${user_id}`, config)
+        this.$ajax.get(`/api/agent/${agent_id}/order` + `?status=${status}&page=${page}&meta=1&user_id=${user_id}`)
           .then(function (response) {
-            if (response.data.data.length !== 0) {
-              self.projects = response.data.data.data
-              self.title = self.title + ` (${self.projects.data.meta.total})`
+            if (response.data.data.data.length !== 0) {
+              self.orders.push(...response.data.data.data)
+              //console.log(self.orders)
+              self.projects.push(...response.data.data.data);
+              self.pageTotal = response.data.data.meta.last_page;
+              if (self.page == 1) {
+                self.title = self.title + ` (${response.data.data.meta.total})`
+              }
+              self.page ++;
+
             } else {
-              self.show_empty = true;
+              if (self.page == 1) {
+                self.show_empty = true;
+              }
             }
+            self.isLoading = false
+            Indicator.close()
           })
           .catch(function (error) {
             console.log(error)
           })
+      },
+      // 判断是否滚动到底部
+      handleScroll(e) {
+        if(e.srcElement.scrollTop + e.srcElement.offsetHeight>e.srcElement.scrollHeight - 40 && !this.isLoading){
+          this.loadmore()
+        }
+      },
+      loadmore() {
+        if (this.page <= this.pageTotal) {
+          this.isLoading = true
+          Indicator.open('加载中...');
+          this.getItem(this.page)
+        }
       }
     },
     mounted() {
@@ -127,16 +149,24 @@
 
 <style scoped>
   .wrapper {
-    height: 100%;
+    /*height: 100%;*/
     background: #F8F8F8;
-    padding-left: .32rem;
-    padding-right: .32rem;
-    padding-top: .2rem;
+
     text-align: center;
   }
 
   .quote-item {
-
+    /*height: 100%;*/
+    padding-left: .32rem;
+    padding-right: .32rem;
+    padding-top: .2rem;
+    background: #F8F8F8;
+    position: fixed;
+    top:.8rem;
+    left: 0;
+    right:0;
+    bottom: 0;
+    overflow: auto
   }
 
   .quote-item li {

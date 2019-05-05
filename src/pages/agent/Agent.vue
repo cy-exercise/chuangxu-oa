@@ -75,6 +75,9 @@
       handleRoute(url) {
         this.$router.push(url)
       }
+    },
+    mounted() {
+      //this.$cookies.set('access_token', '')
     }
   }
 </script>

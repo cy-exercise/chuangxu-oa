@@ -36,7 +36,7 @@
     background: #ffffff;
   }
   .mint-header {
-    background: #F8F8F8;
+    background: #EFEFEF;
     color: #515151;
     font-size: .36rem;
   }
