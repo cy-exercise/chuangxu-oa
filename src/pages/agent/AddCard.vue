@@ -12,7 +12,8 @@
         <div class="bank">
           <div class="bank-name border-bottom">
             <div class="bank-title name">选择银行</div>
-            <input type="text" placeholder="选择银行" v-model="bank" v-on:click.stop="handleSelect">
+            <span style="width: 100%;height: 100%;position: absolute;" @click="handleSelect"></span>
+            <input type="text" placeholder="选择银行" v-model="bank"  style="pointer-events: none;">
           </div>
           <div class=" bank-name">
             <div class="bank-title name">银行卡号码</div>
@@ -200,6 +201,9 @@
   .name {
     line-height: .96rem;
     width: 1.8rem;
+  }
+  .bank-title input {
+    pointer-events: none;
   }
 
   input {
