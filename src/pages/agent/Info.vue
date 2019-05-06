@@ -6,11 +6,13 @@
         <div class="item-title-wrapper border-bottom">
           <div class="item-title">
             我的代理码
-            <span class="save-button">保存二维码</span>
+            <a :href="agent.qrcode_uri">
+              <span class="save-button">保存二维码</span>
+            </a>
           </div>
         </div>
         <div class="qr-code">
-          <img src="/static/images/logo-wx.png" alt="">
+          <img :src="agent.qrcode_uri" alt="">
         </div>
       </div>
     </div>
@@ -27,8 +29,18 @@
     data() {
       return {
         qr_code: '',
-        title: '我的代理信息'
+        title: '我的代理信息',
+        agent: {},
       }
+    },
+    methods: {
+      init() {
+        this.agent = JSON.parse(localStorage.getItem('agent'))
+        console.log(this.agent)
+      }
+    },
+    created() {
+      this.init()
     }
   }
 </script>
@@ -73,5 +85,9 @@
     text-align: center;
     height: 6.44rem;
     line-height: 6.44rem;
+  }
+  .qr-code img {
+    height: 5.66rem;
+    width: 5.66rem;
   }
 </style>

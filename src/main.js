@@ -17,6 +17,18 @@ Vue.config.productionTip = false;
 // 设置axios全局默认值
 axios.defaults.baseURL = 'http://web.chuangxu.com'
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + VueCookies.get('access_token')
+axios.defaults.headers['Content-Type'] = 'application/json'
+
+axios.interceptors.response.use(function (response) {
+  // 对响应数据做点什么
+  return response;
+}, function (error) {
+  // 对响应错误做点什么
+  if (error.response.status === 401) {
+    window.location.href = 'https://nurse.chuangxu.com/m/auth/weixin/login'
+  }
+  return Promise.reject(error);
+});
 
 Vue.prototype.$ajax= axios
 Vue.use(MintUI)

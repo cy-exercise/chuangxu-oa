@@ -13,7 +13,7 @@
       <ul class="percent-block">
         <li v-for="(percent, index) in percents" :class="{selected: percent.selected}" @click="handleSelect(index)">
           <div class="percent-item border-bottom">
-            <div class="percent-number">{{percent.num}}</div>
+            <div class="percent-number">{{percent.num}}%</div>
             <div style="height: .96rem;line-height: .96rem; float: right;">
               <img  class="selected-icon" src="/static/images/gou.png" alt="" v-show="percent.selected">
             </div>
@@ -37,19 +37,19 @@
       return {
         percents: [
           {
-            num: '10%',
+            num: '10',
             selected: false
           },    {
-            num: '20%',
+            num: '20',
             selected: false
           },    {
-            num: '30%',
+            num: '30',
             selected: false
           },    {
-            num: '40%',
+            num: '40',
             selected: false
           },    {
-            num: '50%',
+            num: '50',
             selected: false
           }
         ]

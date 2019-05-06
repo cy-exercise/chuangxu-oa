@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="setting-percent">设置每个项目的百分比加价作为收成（10%~50%）</div>
-      <div class="percent-input" @click="openSelect">{{percent}}</div>
+      <div class="percent-input" @click="openSelect">{{percent}}%</div>
       <!--<input class="percent-input" type="text" v-model="percent" @click="openSelect">-->
       <div class="button" @click="handleSave">保存</div>
     </div>
@@ -31,24 +31,41 @@
     },
     data() {
       return {
-        percent: '',
+        percent: 10,
         selected: 'default',
         title: '报价设置',
-        percent_show: false
+        percent_show: false,
+        quote_type: '',
+        agent: {}
       }
     },
     methods: {
       handleClick(type) {
         this.selected = type
-      },
-      handleSave() {
-        if(true) {
-          alert('保存成功')
-          this.$router.push('/agent')
+        if(type === 'default') {
+          this.quote_type = 0
+        } else {
+          this.quote_type = 1
         }
       },
+      handleSave() {
+        let data = {
+          quote_type: this.quote_type
+        }
+        if (this.quote_type === 0) {
+          data.quote_percent = this.percent
+        }
+        this.$ajax.put(`/api/agent/${this.agent.id}`, data).then(res => {
+          if (res.data.code === 200) {
+            localStorage.setItem('agent', JSON.stringify(res.data.data))
+            this.$router.push('/agent')
+          }
+        })
+      },
       openSelect() {
-        this.percent_show = true
+        if (this.selected === 'default') {
+          this.percent_show = true
+        }
       },
       handleSelect(percent) {
         this.percent = percent;
@@ -56,7 +73,18 @@
       },
       handleColse() {
         this.percent_show = false;
+      },
+      init() {
+        this.agent = JSON.parse(localStorage.getItem('agent'))
+        this.quote_type = this.agent.quote_type
+        this.percent = this.agent.quote_percent
+        if (this.quote_type === 1) {
+          this.selected = 'times'
+        }
       }
+    },
+    created() {
+      this.init()
     }
   }
 </script>

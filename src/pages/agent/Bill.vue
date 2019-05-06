@@ -4,7 +4,7 @@
       <Empty v-show="empty_show" info="暂无零钱提现记录" icon="/static/images/bill_icon.png"></Empty>
 
       <ul class="bill-list" v-show="!empty_show">
-        <li>
+        <li v-for="draw of draws">
           <div class="bill-icon">
             <img src="/static/images/wallet@2x.png" alt="">
           </div>
@@ -12,23 +12,15 @@
             <div class="block-title">
               <div>
                 <div class="bill-title">提现</div>
-                <div class="bill-date">2019/4/12 08:24</div>
+                <div class="bill-date">{{draw.created_at}}</div>
               </div>
             </div>
-            <div class="bill-money">￥2500.00</div>
-          </div>
-        </li>
-
-        <li>
-          <div class="bill-icon">
-            <img src="/static/images/wallet@2x.png" alt="">
-          </div>
-          <div class="bill-content border-bottom">
-            <div class="block-title">
-              <div class="bill-title">提现</div>
-              <div class="bill-date">2019/4/12 08:24</div>
+            <div class="bill-money">
+              <div>
+                <div class="amount">￥{{draw.amount}}</div>
+                <div class="status">提现申请已提交</div>
+              </div>
             </div>
-            <div class="bill-money">￥2500.00</div>
           </div>
         </li>
       </ul>
@@ -47,13 +39,24 @@
     data() {
       return {
         title: '账单',
-        empty_show: false
+        empty_show: false,
+        draws: []
       }
     },
     methods: {
-      test() {
-        alert(11)
+      // 获取提现列表
+      getDraws() {
+        this.$ajax.get('/api/draw').then(res => {
+          if (res.data.data.data.length > 0) {
+            this.draws = res.data.data.data
+          } else {
+            this.empty_show = true
+          }
+        })
       }
+    },
+    created() {
+      this.getDraws()
     }
   }
 </script>
@@ -103,9 +106,8 @@
   }
   .bill-money {
     float: right;
-    font-size: .48rem;
-    font-weight: 500;
-    color: #28B2FE;
+    height: 1.45rem;
+    line-height: 1;
   }
   .bill-title {
     height: .42rem;
@@ -119,5 +121,20 @@
     color: #B5B5B5;
     font-size: .24rem;
     font-weight: 400;
+  }
+  .status {
+    height: .33rem;
+    line-height: .33rem;
+    text-align: right;
+    font-size: .2rem;
+    color: #B5B5B5;
+  }
+  .amount {
+    height: .42rem;
+    font-size: .48rem;
+    font-weight: 500;
+    color: #28B2FE;
+    margin-top: .4rem;
+    margin-bottom: .1rem;
   }
 </style>

@@ -10,7 +10,7 @@
           <div class="name">持卡人姓名</div>
           <input type="text" v-model="people_name">
         </div>
-        <div class="button" @click="handleClick">确定</div>
+        <div class="button" @click="handleAdd">确定</div>
       </div>
     </div>
 </template>
@@ -49,6 +49,9 @@
       },
       addCard(data) {
         return true;
+      },
+      handleAdd() {
+
       }
     }
   }

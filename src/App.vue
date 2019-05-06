@@ -18,8 +18,11 @@ export default {
     }
   },
   created() {
-    console.log(1234)
+    //console.log(1234)
     //this.loginCheck()
+  },
+  mounted() {
+    // console.log(1234)
   }
 }
 </script>

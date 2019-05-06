@@ -7,11 +7,11 @@
     <div class="info-wrapper">
       <div class="total-money border-top">
         <div class="withdraw-title">提现金额</div>
-        <div class="withdraw-money">￥2500.00</div>
+        <div class="withdraw-money">￥{{amount}}</div>
       </div>
       <div class="bank-account">
         <div class="withdraw-title">到银行账户</div>
-        <div class="withdraw-money">XX银行(567345345434****2345)</div>
+        <div class="withdraw-money">{{bank}}({{bank_card}})</div>
       </div>
     </div>
     <router-link to="/agent">
@@ -26,6 +26,23 @@
     name: "WithdrawInfo",
     components: {
       StepWithdraw
+    },
+    data() {
+      return {
+        bank: '',
+        bank_card: '',
+        amount: ''
+      }
+    },
+    methods: {
+      init() {
+        this.bank = this.$route.query.bank
+        this.bank_card = this.$route.query.bank_card
+        this.amount = this.$route.query.amount
+      }
+    },
+    created() {
+      this.init()
     }
   }
 </script>

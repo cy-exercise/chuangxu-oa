@@ -1,21 +1,21 @@
 <template>
   <div class="wrapper">
-    <SelectItem v-show="showSelect" :is_show="showSelect" v-on:addSelectEvent="addSelect" v-on:handleCloseEvent = "handleColse"></SelectItem>
+    <SelectItem :cards="card" v-show="showSelect" :is_show="showSelect" v-on:addSelectEvent="addSelect" v-on:handleCloseEvent = "handleColse"></SelectItem>
     <Header :title="title" to="/"></Header>
     <div class="container">
       <div class="withdraw-title border-bottom" @click="handleSelect">
-        <div class="wx" v-show="!show_card">
-          <div class="title-left">
-            <div class="title-left-item">
-              <span>提现到</span>
-              <img src="/static/images/logo-wx.png" alt="">
-              <span class="logo-name">微信</span>
-            </div>
-          </div>
-          <div class="description">一次性转账≤￥5000.00</div>
-          <img class="into-icon" src="/static/images/into_normal.png" alt="">
-        </div>
-        <div class="card" v-show="show_card">
+        <!--<div class="wx" v-show="!show_card">-->
+          <!--<div class="title-left">-->
+            <!--<div class="title-left-item">-->
+              <!--<span>提现到</span>-->
+              <!--<img src="/static/images/logo-wx.png" alt="">-->
+              <!--<span class="logo-name">微信</span>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="description">一次性转账≤￥5000.00</div>-->
+          <!--<img class="into-icon" src="/static/images/into_normal.png" alt="">-->
+        <!--</div>-->
+        <div class="card">
           <span class="input-title">提现到</span>
           <img class="card-icon" src="/static/images/bank_card.png" alt="">
           <span>银行卡 ({{card.account}})</span>
@@ -31,8 +31,8 @@
       </div>
       <div class="withdraw-submit" :class="{submit: total}">
         <div class="submit-title">
-          <span class="salary">工资余额￥2500.00，</span>
-          <span class="all">全部提现</span>
+          <span class="salary">工资余额￥{{balance}}</span>
+          <span class="all" @click="handleAll">全部提现</span>
         </div>
         <div class="button" @click="handleSubmit">提交</div>
       </div>
@@ -58,7 +58,9 @@
           name: '',
           account: ''
         },
-        total: ''
+        total: '',
+        balance: '',
+        agent: {}
       }
     },
     methods: {
@@ -74,22 +76,45 @@
         }
         this.showSelect = false
       },
-      handleColse()
-      {
+      handleColse() {
         this.showSelect = false;
       },
       handleSubmit() {
         if (!this.total) {
           return false;
         }
-        // 先提交后台处理
-        // 跳转
-        if (true) {
-          this.$router.push('/agent/withdraw_info')
-        }
+        let data = {
+          amount: this.total
+        };
+        this.$ajax.post('/api/draw', data).then(res => {
+
+          if (res.data.code === 200) {
+            this.$router.push({
+              path: '/agent/withdraw_info',
+              query: {
+                amount: this.total,
+                bank: this.card.name,
+                bank_card: this.card.account
+              }
+            })
+          }
+        }).catch(error => {
+
+        })
+      },
+      handleAll() {
+        this.total = this.balance
+      },
+      init() {
+        this.balance = this.$route.query.balance
+        this.agent = JSON.parse(localStorage.getItem('agent'))
+        this.card.name = this.agent.bank
+        this.card.account = this.agent.bank_card
       }
     },
     mounted() {
+      console.log(localStorage.getItem('agent'))
+      this.init()
       this.$refs.withdraw.focus()
     }
   }
@@ -106,8 +131,6 @@
     background: #ffffff;
     margin-left: .32rem;
     margin-top: .39rem;
-    /*padding-top: .26rem;*/
-    /*padding-bottom: .4rem;*/
     padding-left: .4rem;
     padding-right: .4rem;
     box-sizing: border-box;
@@ -177,13 +200,15 @@
     font-size: .5rem;
     font-weight: 500;
     display: inline-block;
-    height: .7rem;
+    position: absolute;
+    bottom: .1rem;
+    height: .5rem;
     width: .5rem;
   }
   .imput-wrapper input {
     font-size: .5rem;
     font-weight: 500;
-    width: 5.4rem;
+    margin-left: .5rem;
   }
   .withdraw-submit {
     height: 1.92rem;

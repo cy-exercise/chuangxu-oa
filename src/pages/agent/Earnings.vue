@@ -5,12 +5,11 @@
         <div class="bill" @click="handleRoute('/agent/bill')">账单</div>
       </div>
       <img class="wallet" src="/static/images/wallet@2x.png" alt="">
-      <div class="total">￥2500.00</div>
+      <div class="total">￥{{balance}}</div>
       <div class="total-title">我的收益</div>
       <div class="total-content">您可以随时发起提现，平台会在星期五为您转账</div>
-      <router-link to="/agent/withdraw">
-        <div class="submit-button">提现</div>
-      </router-link>
+
+      <div class="submit-button" @click="handleWithdraw" :class="{'submit-gray': gray}">提现</div>
     </div>
 </template>
 
@@ -23,13 +22,39 @@
     },
     data() {
       return {
-        title: '我的收益'
+        title: '我的收益',
+        balance: '',
+        gray: false
       }
     },
     methods: {
       handleRoute(url) {
         this.$router.push(url)
+      },
+      handleWithdraw() {
+        if (this.balance <= 0) {
+          return false;
+        }
+        this.$router.push({
+          path: '/agent/withdraw',
+          query: {
+            balance: this.balance
+          }
+        })
+      },
+      getAccount() {
+        this.$ajax.get(`/api/user/${this.$cookies.get('user_id')}/account`).then(res => {
+          this.balance = res.data.data.balance
+          if(this.balance <= 0) {
+            this.gray = true
+          }
+        }).catch(function (error) {
+
+        })
       }
+    },
+    created() {
+      this.getAccount()
     }
   }
 </script>
@@ -82,5 +107,8 @@
     color: #ffffff;
     margin-top: 1.68rem;
     margin-left: .72rem;
+  }
+  .submit-gray {
+    background:rgba(40,178,254, .5);
   }
 </style>
