@@ -9,7 +9,9 @@
       <img src="/static/images/order_complete.png" alt="">
       <div class="complete-title">报价成功！</div>
       <p class="complete-content">点击个人中心“进行中的项目” <br>随时查看项目进度</p>
-      <div class="complete-botton">完成</div>
+      <router-link to="/agent">
+        <div class="complete-botton">完成</div>
+      </router-link>
       <div class="jump-price-setting" @click="handleRoute('/agent/quot_setting')">报价设置</div>
     </div>
 

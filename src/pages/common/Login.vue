@@ -1,5 +1,7 @@
 <template>
-    <div></div>
+    <div>
+      <div class="login">登录中...</div>
+    </div>
 </template>
 
 <script>
@@ -12,9 +14,8 @@
         this.$cookies.set('access_token', access_token);
         this.$ajax.defaults.headers.common['Authorization'] = 'Bearer ' + access_token
         this.getUserInfo();
-        //this.$router.push('/salary')
       },
-      getUserInfo(access_token) {
+      getUserInfo() {
         let self = this;
         this.$ajax.post('/api/user/info').then(res => {
           this.$cookies.set('user_id', res.data.data.id);
@@ -42,5 +43,13 @@
 </script>
 
 <style scoped>
-
+  .login {
+    position: fixed;
+    bottom: 0;
+    top: .8rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: .36rem;
+  }
 </style>

@@ -94,7 +94,7 @@ export default new Router({
       component: Withdraw
     },
     {
-      path: '/agent/order',
+      path: '/agent/order/:id',
       name: 'Order',
       component: Order
     },

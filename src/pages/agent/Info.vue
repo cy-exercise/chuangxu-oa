@@ -36,7 +36,7 @@
     methods: {
       init() {
         this.agent = JSON.parse(localStorage.getItem('agent'))
-        console.log(this.agent)
+        // console.log(this.agent)
       }
     },
     created() {

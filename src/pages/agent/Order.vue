@@ -4,24 +4,24 @@
     <div class="order-item">
       <img src="/static/images/logo.png" alt="" class="logo">
       <div class="order-title">论文润色</div>
-      <div class="price">￥3409.00</div>
+      <div class="price">￥{{order.price}}</div>
       <div>
         <div class="left">
-          <div class="index">23%</div>
+          <div class="index">{{review ? review.rate: ''}}</div>
           <div class="index-title">抄袭指数</div>
         </div>
         <div class="right">
-          <div class="word-number">1673</div>
+          <div class="word-number">{{review ? review.word_count : ''}}</div>
           <div class="word">字数</div>
         </div>
       </div>
     </div>
     <!-- 打电话 -->
     <div class="call-container">
-      <img src="/static/images/avatar.png" alt="">
+      <img :src="user.avatar.url" alt="">
       <div class="call-info-wrapper">
-        <div class="name">Kimberly Hernandez</div>
-        <div class="phone">电话：{{phone}}</div>
+        <div class="name">{{user.name}}</div>
+        <div class="phone">电话：{{user.phone}}</div>
       </div>
       <div class="call-button" @click="callPhone(phone)">打电话给他</div>
     </div>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="submit-box">
-      <div class="submit-button" v-bind:class="{active: isActive}" @click="do_quote">立即报价</div>
+      <div class="submit-button" v-bind:class="{active: isActive}" @click="handleQuote">立即报价</div>
     </div>
 
   </div>
@@ -56,14 +56,33 @@
         isActive: false,
         phone: '13423453431',
         redirect: '/agent/quote_success',
-        title: '订单报价'
+        title: '订单报价',
+        oder_id: '',
+        order: '',
+        review: '',
+        user: {
+          phone: '',
+          name: '',
+          avatar: {
+            url: ''
+          }
+        }
       }
     },
     methods: {
       handleClick() {
         let _this = this;
         MessageBox.prompt('请输入金额', '我的报价').then(({ value, action }) => {
-          _this.price_str = '￥' + value + '.00';
+
+          if (value <= _this.order.price) {
+            return false
+          }
+          if (value) {
+            _this.price_str = '￥' + value + '.00';
+          } else {
+            _this.price_str = '￥'
+          }
+
           _this.price = value
           _this.isActive = true
         });
@@ -72,20 +91,42 @@
       callPhone(phone) {
         window.location.href = 'tel://' + phone
       },
-
       // 提交报价
-      do_quote() {
+      handleQuote() {
         if (!this.isActive) return false;
-        let post = {
+        let data = {
           price: this.price
         }
-        // this.$ajax.post('https://api.github.com/users', post).then(function (response) {
-        //   console.log(response)
-        // })
-        if (true) {
-          this.$router.push(this.redirect)
-        }
+        this.$ajax.put(`/api/order/${this.oder_id}`, data).then(res => {
+          if (res.data.code == 200) {
+            this.$router.push({
+              path: '/agent/quote_success',
+              query: {
+
+              }
+            })
+          }
+        }).catch(error => {
+            alert(error.response.data.message)
+        })
+      },
+      getOrder() {
+        this.$ajax.get(`/api/order/${this.oder_id}`).then(res => {
+          // console.log(res.data)
+          this.order = res.data.data
+          this.review = this.order.project.review
+          this.user = this.order.user
+        }).catch(error => {
+
+        })
+      },
+      init() {
+        this.oder_id = this.$route.params.id
       }
+    },
+    created() {
+      this.init()
+      this.getOrder()
     }
   }
 </script>

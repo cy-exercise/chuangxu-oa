@@ -54,6 +54,7 @@
       }
     },
     created() {
+      console.log(12342)
       this.getAccount()
     }
   }

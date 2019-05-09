@@ -4,7 +4,7 @@
     <Empty v-show="show_empty"></Empty>
     <div class="wrapper" v-show="!show_empty">
       <ul class="quote-item" @scroll="handleScroll">
-        <li @click="handleRoute" v-for="project in projects">
+        <li @click="handleRoute(project.id)" v-for="project in projects">
           <div class="order-title border-bottom">
             <span class="title">{{(project.project === null) ? '' : project.project.title}}</span>
             <span class="price">￥{{project.price}}</span>
@@ -56,7 +56,7 @@
         projects: [],
         show_empty: false,
         status_map: {
-          wait: 1,
+          wait: 11,
           doing: 4,
           done: 5
         },
@@ -68,8 +68,13 @@
       }
     },
     methods: {
-      handleRoute() {
-        this.$router.push(this.action_url)
+      handleRoute(order_id) {
+        if (this.$route.params.status == 'wait') {
+          this.$router.push(this.action_url + `/${order_id}`)
+        } else {
+          this.$router.push(this.action_url)
+        }
+
       },
       init() {
         let status = this.$route.params.status

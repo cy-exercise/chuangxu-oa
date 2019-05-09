@@ -58,6 +58,7 @@
         this.$ajax.put(`/api/agent/${this.agent.id}`, data).then(res => {
           if (res.data.code === 200) {
             localStorage.setItem('agent', JSON.stringify(res.data.data))
+            alert('修改成功')
             this.$router.push('/agent')
           }
         })
@@ -78,8 +79,9 @@
         this.agent = JSON.parse(localStorage.getItem('agent'))
         this.quote_type = this.agent.quote_type
         this.percent = this.agent.quote_percent
-        if (this.quote_type === 1) {
+        if (this.quote_type == 1) {
           this.selected = 'times'
+          this.percent = ''
         }
       }
     },

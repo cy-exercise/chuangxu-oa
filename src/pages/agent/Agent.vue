@@ -1,56 +1,66 @@
 <template>
   <div class="wrapper">
     <Header title="个人中心" to="/agent"></Header>
-    <div class="box" style="">
-      <div class="people">
-        <img class="avatar" src="/static/images/avatar.png" alt="">
-        <div class="nickname">
-          微信昵称
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="item-title-wrapper border-bottom">
-        <div class="item-title ">
-          我的项目
-        </div>
-      </div>
-      <div class="quot-wrapper">
-        <div class="quot-item" @click="handleRoute('/agent/quot/wait')">
-          <img src="/static/images/wait.png" alt="">
-          <div class="status">待报价</div>
-        </div>
-        <div class="quot-item" @click="handleRoute('/agent/quot/doing')">
-          <img src="/static/images/doing.png" alt="">
-          <div class="status">进行中</div>
-        </div>
-        <div class="quot-item" @click="handleRoute('/agent/quot/done')">
-          <img src="/static/images/completed.png" alt="">
-          <div class="status">完成</div>
-        </div>
-      </div>
-      <div class="space" style="height: .4rem;"></div>
-      <div class="item-box">
-        <div class="item-wrapper">
-          <div class="item" @click="handleRoute('/agent/info')">
-            <img class="item-img" src="/static/images/agent.png" alt="">
-            <div class="item-right border-bottom">
-              <span>我的代理信息</span>
-              <img class="icon" src="/static/images/into_normal.png" alt="">
-            </div>
+    <div class="block">
+      <div class="box" style="">
+        <div class="people">
+          <img class="avatar" :src="user.avatar.uri" alt="">
+          <div class="nickname">
+            {{user.name}}
           </div>
-          <div class="item" @click="handleRoute('/agent/earnings')">
-            <img class="item-img" src="/static/images/earnings.png" alt="">
-            <div class="item-right border-bottom">
-              <span>我的收益</span>
-              <img class="icon" src="/static/images/into_normal.png" alt="">
-            </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="item-title-wrapper border-bottom">
+          <div class="item-title ">
+            我的项目
           </div>
-          <div class="item" @click="handleRoute('/agent/quot_setting')">
-            <img class="item-img" src="/static/images/price_setting.png" alt="">
-            <div class="item-right">
-              <span>报价设置</span>
-              <img class="icon" src="/static/images/into_normal.png" alt="">
+        </div>
+        <div class="quot-wrapper">
+          <div class="quot-item" @click="handleRoute('/agent/quot/wait')">
+            <div class="icon-wrapper">
+              <div class="icon-wait">
+                <img src="/static/images/wait.png" alt="">
+              </div>
+            </div>
+            <div class="status">待报价</div>
+          </div>
+          <div class="quot-item" @click="handleRoute('/agent/quot/doing')">
+            <div class="icon-wrapper">
+              <img src="/static/images/doing.png" alt="">
+            </div>
+            <div class="status">进行中</div>
+          </div>
+          <div class="quot-item" @click="handleRoute('/agent/quot/done')">
+            <div class="icon-wrapper">
+              <img src="/static/images/completed.png" alt="">
+            </div>
+            <div class="status">完成</div>
+          </div>
+        </div>
+        <div class="space" style="height: .4rem;"></div>
+        <div class="item-box">
+          <div class="item-wrapper">
+            <div class="item" @click="handleRoute('/agent/info')">
+              <img class="item-img" src="/static/images/agent.png" alt="">
+              <div class="item-right border-bottom">
+                <span>我的代理信息</span>
+                <img class="icon" src="/static/images/into_normal.png" alt="">
+              </div>
+            </div>
+            <div class="item" @click="handleRoute('/agent/earnings')">
+              <img class="item-img" src="/static/images/earnings.png" alt="">
+              <div class="item-right border-bottom">
+                <span>我的收益</span>
+                <img class="icon" src="/static/images/into_normal.png" alt="">
+              </div>
+            </div>
+            <div class="item" @click="handleRoute('/agent/quot_setting')">
+              <img class="item-img" src="/static/images/price_setting.png" alt="">
+              <div class="item-right">
+                <span>报价设置</span>
+                <img class="icon" src="/static/images/into_normal.png" alt="">
+              </div>
             </div>
           </div>
         </div>
@@ -68,16 +78,20 @@
     },
     data() {
       return {
-        selected: true
+        selected: true,
+        user: {}
       }
     },
     methods: {
       handleRoute(url) {
         this.$router.push(url)
+      },
+      init() {
+        this.user = JSON.parse(localStorage.getItem('user'))
       }
     },
-    mounted() {
-      //this.$cookies.set('access_token', '')
+    created() {
+      this.init()
     }
   }
 </script>
@@ -91,6 +105,14 @@
     width: 100%;
     margin: auto;
     overflow: hidden;
+  }
+  .block {
+    /*height: 100%;*/
+    overflow: scroll;
+    background: #F8F8F8;
+    /*left: 0;*/
+    /*right: 0;*/
+    /*overflow: scroll;*/
   }
 
   .people {
@@ -126,8 +148,12 @@
     font-size: .3rem;
   }
   .container {
-    height: 8.43rem;
+    /*height: 8.43rem;*/
     background: #F8F8F8;
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
   }
   .item-title {
     font-size: .24rem;
@@ -167,10 +193,30 @@
     line-height: 1.13rem;
     text-align: left;
   }
-
-  .item .item-img {
-    height: .44rem;
+  .icon-wrapper {
+    /*margin-right: .2rem;*/
+  }
+  .icon-wait {
+    position: relative;
     width: .44rem;
+    height: .44rem;
+    margin: 0 auto;
+  }
+  .icon-wait::before {
+    content: "";
+    width: .14rem;
+    height: .14rem;
+    border-radius: .07rem;
+    border: .02rem solid #ffffff;
+    position: absolute;
+    top: -.06rem;
+    right: -.04rem;
+    background: #FF5151;
+    box-sizing: border-box;
+  }
+  .item .item-img {
+    max-height: .44rem;
+    max-width: .44rem;
     float: left;
     margin-top: .34rem;
     margin-left: .2rem;
@@ -197,12 +243,13 @@
     background: #ffffff;
   }
   .quot-item {
-    justify-content: center;
+    /*justify-content: center;*/
     flex: 1;
+    /*display: flex;*/
   }
   .quot-item img {
-    height: .44rem;
-    width: .44rem;
+    max-height: .44rem;
+    max-width: .44rem;
   }
   .status {
     height: .33rem;

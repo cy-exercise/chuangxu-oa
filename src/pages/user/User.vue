@@ -3,31 +3,38 @@
     <Header title="个人中心" to="/user"></Header>
     <div class="box" style="">
       <div class="people">
-        <img class="avatar" src="/static/images/avatar.png" alt="">
+        <img class="avatar" :src="user.avatar.uri" alt="">
         <div class="nickname">
-          微信昵称
+          {{user.name}}
         </div>
       </div>
     </div>
     <div class="space"></div>
     <div class="item-box">
       <div class="item-wrapper">
-        <div class="item" @click="handleRoute(2)">
-          <img class="item-img" src="/static/images/dollar@2x.png" alt="">
+        <div class="item" @click="handleRoute(status.pending)">
+          <div class="icon-wrapper">
+            <img class="item-img" src="/static/images/dollar@2x.png" alt="">
+          </div>
           <div class="item-right border-bottom">
             <span>待付款的项目</span>
             <img class="icon" src="/static/images/into_normal.png" alt="">
           </div>
         </div>
-        <div class="item" @click="handleRoute(4)">
-          <img class="item-img" src="/static/images/doing.png" alt="">
+        <div class="item" @click="handleRoute(status.doing)">
+          <div class="icon-wrapper">
+            <img class="item-img" src="/static/images/doing.png" alt="">
+          </div>
+
           <div class="item-right border-bottom">
             <span>进行中的项目</span>
             <img class="icon" src="/static/images/into_normal.png" alt="">
           </div>
         </div>
-        <div class="item" @click="handleRoute(5)">
-          <img class="item-img" src="/static/images/completed.png" alt="">
+        <div class="item" @click="handleRoute(status.done)">
+          <div class="icon-wrapper">
+            <img class="item-img" src="/static/images/completed.png" alt="">
+          </div>
           <div class="item-right border-bottom">
             <span>完成的项目</span>
             <img class="icon" src="/static/images/into_normal.png" alt="">
@@ -48,24 +55,28 @@
     data() {
       return {
         selected: true,
-        order_url: '/user/order'
+        order_url: '/user/order',
+        user: {},
+        status: {
+          pending: 2, //待付款
+          doing: 4, // 进行中
+          done: 5 // 已完成
+        }
       }
     },
     methods: {
       handleRoute(status) {
-        // this.$router.push(url)
         this.$router.push(this.order_url + '?status=' + status)
       },
-      checkUserLogin() {
-        this.$cookies.set('user', 'fdsfdsfs', 100);
-        // console.log(this.$cookies.get('wx-user'));
-        // this.$ajax.get('http://web.chuangxu.com/m/social_login/wexin').then(function (response) {
-        //   // console.log(response.data)
-        // })
+      init() {
+        this.user = JSON.parse(localStorage.getItem('user'))
+        if(!this.user) {
+          window.location.href = 'http://cy123.natapp1.cc/m/auth/weixin/login'
+        }
       }
     },
-    mounted() {
-      this.checkUserLogin();
+    created() {
+      this.init()
     }
   }
 </script>
@@ -142,10 +153,14 @@
   }
 
   .item .item-img {
-    height: .44rem;
-    width: .44rem;
+    max-height: .44rem;
+    max-width: .44rem;
+    /*float: left;*/
+    /*margin-top: .34rem;*/
+    /*margin-left: .2rem;*/
+  }
+  .icon-wrapper {
     float: left;
-    margin-top: .34rem;
     margin-left: .2rem;
   }
 

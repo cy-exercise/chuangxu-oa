@@ -62,11 +62,11 @@
     },
     methods: {
       handleRoute(item) {
-
         if (this.status == 2) {
 
-          this.$router.push(`/user/order/${item.order.id}/pay` + `?title=${item.title}&price=${item.order.price}`)
+          this.$router.push(`/user/order/${item.order.id}/pay`)
         } else  {
+
           this.$router.push(this.action_url + `?title=${item.title}&price=${item.order.price}`)
         }
       },
@@ -88,26 +88,20 @@
       getItem() {
         let page = 1;
         let status = this.status;
-        let config = {
-          headers: {
-            Authorization: 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjI5NWI5MTY3NmM0MjBlNDZiNzM0ODhlYjMzMzk1ZDljODg3NWY4OGU0Njg4NTM1MTJmMjZmMThkZmZhODE1ZjVkNWQ2NzU1ZjU3ODJjZDMzIn0.eyJhdWQiOiI0IiwianRpIjoiMjk1YjkxNjc2YzQyMGU0NmI3MzQ4OGViMzMzOTVkOWM4ODc1Zjg4ZTQ2ODg1MzUxMmYyNmYxOGRmZmE4MTVmNWQ1ZDY3NTVmNTc4MmNkMzMiLCJpYXQiOjE1NTUyOTgyNDgsIm5iZiI6MTU1NTI5ODI0OCwiZXhwIjoxNTU2NTk0MjQ4LCJzdWIiOiI5MTQwMTkyMy1jM2M2LTRlYmYtOTYyMS1hOTliOGI5MGU0YjEiLCJzY29wZXMiOltdfQ.HN4ZEs80DZqGYOqSbwW8J8KvgXCTIio0bQJxWiR6_O8qr-cxnMs1Zd-xq-H2fWLcGswmEivb3CJXP9jj1sbdEsQ1u3x6kor4R7Cp18YkdsR60QIjyf54tjZWk0ibzjmM4RyoOA64m82-1Q8uRSjbFssP4YS8-UNjxN3Qj2t5sSjqG-JHIWGUyyoxwD5W9-Pd0bhU6SfJDlugtVTOkZYxoTO2fT0AKQX-9Nwnv9uQZTRStjCH-Bqm8O6s732ezDKgFX6OE6MTfgQSpyIG-kthFeX5MRML-Fv8xuTZNPVhyNEKtXIAM2Nn0o3YQRduq7OVNh7kaW6YMt0tZKjQzP8Qbwv8MqIVkQIVk6_KT-DghTEH_MRmQs_5EwU3M2VDqWOTYwEwNjSNm1uUp91WOHYX00lM1j2oZi68_dUMF5FmXlS18FiQmUC8GruakeTR114ZaZDUG9VYlviVZUGGWGMo7lX3OpkCaD8l5J4NFg-ir4X_1_MllTFTwiFxUza9Sg6W99N4tIdQfSqK1h2eflPzZhAX3bM1_kTfS7QuROiwuYT-gAaJJb7AhTQShGB6T7Y83nWvpL4RoMBZg1D8qi1l3FPyYaGXF69WkmZpi8X_f_tP5RrnBOOVWUM0lVm12S-lIk8ChsSeUZgC--R_pZz47CR3X75OfFL6db1SFRfBH7c'
-          }
-        };
         let self = this;
-        this.$cookies.set('access_token', '5465fdsfdsflkjdsflkds');
-        // this.$ajax.get('http://web.chuangxu.com/api/project' + `?status=${status}`, config).then(function (response) {
-        //   //console.log(response.data)
-        //   if (response.data.data.length !== 0) {
-        //     self.order_list = response.data.data;
-        //     self.title  = self.title + `（${self.order_list.length})`
-        //   } else  {
-        //     self.show_empty = true;
-        //   }
-        //
-        // })
+        let query = `?status=${status}&page=${page}`
+        this.$ajax.get('api/project' + query).then(res => {
+          // console.log(res.data)
+          if (res.data.data.length === 0) {
+            this.show_empty = true
+          }
+          this.order_list = res.data.data
+        }).catch(error => {
+
+        })
       }
     },
-    mounted() {
+    created() {
       this.init();
       this.getItem()
     }

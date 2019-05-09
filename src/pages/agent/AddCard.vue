@@ -108,6 +108,7 @@
             "value": "1056"
           }
         ],
+        agent: {}
       }
     },
     methods: {
@@ -134,6 +135,16 @@
       handleAdd() {
         if (this.bank && this.bank_card && this.people_name) {
           // 修改银行卡信息
+          let data = {
+            bank: this.bank,
+            bank_card: this.bank_card,
+            name: this.people_name
+          }
+          this.$ajax.put(`/api/agent/${this.agent.id}`, data).then(res => {
+            console.log(res.data)
+          }).catch(error => {
+
+          })
         }
       },
       onYearChange(picker, values) {
@@ -149,7 +160,13 @@
       },
       handleSelect() {
         this.popupVisible = true
+      },
+      init() {
+        this.agent = JSON.parse(localStorage.getItem('agent'))
       }
+    },
+    created() {
+      this.init()
     }
   }
 </script>

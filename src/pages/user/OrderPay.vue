@@ -1,17 +1,17 @@
 <template>
   <div class="wrapper">
-    <Header title="我的订单" to="/user/order?status=wait"></Header>
+    <Header title="我的订单" to="/user/order?status=2"></Header>
     <div class="order-item">
       <img src="/static/images/logo.png" alt="" class="logo">
       <div class="order-title">{{project.title}}</div>
-      <div class="price">￥{{project.price}}</div>
+      <div class="price">￥{{order.price}}</div>
       <div>
         <div class="left">
-          <div class="index">23%</div>
+          <div class="index">{{review ? review.rate : ''}}</div>
           <div class="index-title">抄袭指数</div>
         </div>
         <div class="right">
-          <div class="word-number">1673</div>
+          <div class="word-number">{{review ? review.word_count : ''}}</div>
           <div class="word">字数</div>
         </div>
       </div>
@@ -24,12 +24,17 @@
 <script>
   import Header from '../common/Header';
   import { MessageBox } from 'mint-ui';
+  import wx from "weixin-js-sdk";
   export default {
     name: "OrderPay",
     data() {
       return {
         project: {},
-        order_id: ''
+        order_id: '',
+        status: '',
+        order: {},
+        review: {},
+        wxpay: {}
       }
     },
     components: {
@@ -37,40 +42,60 @@
     },
     methods: {
       handlePay() {
-        let config = {
-          headers: {
-            Authorization: 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjI5NWI5MTY3NmM0MjBlNDZiNzM0ODhlYjMzMzk1ZDljODg3NWY4OGU0Njg4NTM1MTJmMjZmMThkZmZhODE1ZjVkNWQ2NzU1ZjU3ODJjZDMzIn0.eyJhdWQiOiI0IiwianRpIjoiMjk1YjkxNjc2YzQyMGU0NmI3MzQ4OGViMzMzOTVkOWM4ODc1Zjg4ZTQ2ODg1MzUxMmYyNmYxOGRmZmE4MTVmNWQ1ZDY3NTVmNTc4MmNkMzMiLCJpYXQiOjE1NTUyOTgyNDgsIm5iZiI6MTU1NTI5ODI0OCwiZXhwIjoxNTU2NTk0MjQ4LCJzdWIiOiI5MTQwMTkyMy1jM2M2LTRlYmYtOTYyMS1hOTliOGI5MGU0YjEiLCJzY29wZXMiOltdfQ.HN4ZEs80DZqGYOqSbwW8J8KvgXCTIio0bQJxWiR6_O8qr-cxnMs1Zd-xq-H2fWLcGswmEivb3CJXP9jj1sbdEsQ1u3x6kor4R7Cp18YkdsR60QIjyf54tjZWk0ibzjmM4RyoOA64m82-1Q8uRSjbFssP4YS8-UNjxN3Qj2t5sSjqG-JHIWGUyyoxwD5W9-Pd0bhU6SfJDlugtVTOkZYxoTO2fT0AKQX-9Nwnv9uQZTRStjCH-Bqm8O6s732ezDKgFX6OE6MTfgQSpyIG-kthFeX5MRML-Fv8xuTZNPVhyNEKtXIAM2Nn0o3YQRduq7OVNh7kaW6YMt0tZKjQzP8Qbwv8MqIVkQIVk6_KT-DghTEH_MRmQs_5EwU3M2VDqWOTYwEwNjSNm1uUp91WOHYX00lM1j2oZi68_dUMF5FmXlS18FiQmUC8GruakeTR114ZaZDUG9VYlviVZUGGWGMo7lX3OpkCaD8l5J4NFg-ir4X_1_MllTFTwiFxUza9Sg6W99N4tIdQfSqK1h2eflPzZhAX3bM1_kTfS7QuROiwuYT-gAaJJb7AhTQShGB6T7Y83nWvpL4RoMBZg1D8qi1l3FPyYaGXF69WkmZpi8X_f_tP5RrnBOOVWUM0lVm12S-lIk8ChsSeUZgC--R_pZz47CR3X75OfFL6db1SFRfBH7c'
-          }
-        };
         let data = {
-          pay_type: 21
-        };
-        this.$ajax.put('http://web.chuangxu.com/api/order/' + this.order_id + '/pay', data, config).then(function (response) {
-          // console.log(response);
-          //
-          if (response.data.code === 200) {
-            this.$router.push('/user/pay_success')
+          pay_type: 21,
+          open_id: 'oWI0v1GBiAAVvDh8WUprWQjfhuFM'
+        }
+        let _this = this
+        this.$ajax.put('/api/order/' + this.order_id + '/pay', data).then(function (res) {
+          if (res.data.code ==200) {
+            _this.wxpay = res.data.data.data
+            _this.wxPay(_this.wxpay)
+            //this.$router.push('/user/pay_success')
           } else  {
 
           }
-        })
-          .catch(function (error) {
-            MessageBox.alert('支付失败')
+        }).catch(function (error) {
+            // console.log(error.response.data.message)
+            // MessageBox.alert(error.response.data.message)
           })
       },
+      wxPay(pay) {
+        wx.chooseWXPay({
+          timestamp: pay.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+          nonceStr: pay.nonceStr, // 支付签名随机串，不长于 32 位
+          package: pay.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+          signType: pay.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+          paySign: pay.paySign, // 支付签名
+          success: function (res) {
+              // 支付成功后的回调函数
+            console.log(res)
+          },
+          fail: function (res) {
+            alert(JSON.stringify(res))
+          }
+        });
+      },
       init() {
-        let query = this.$route.query;
-        this.project.title = query['title'];
-        this.project.price = query['price'];
         this.order_id = this.$route.params.id
+      },
+      getOrder() {
+        this.$ajax.get('api/order/' + `${this.$route.params.id}`).then(res => {
+          console.log(res.data)
+          if (res.data.code == 200) {
+            this.order = res.data.data
+            this.project = this.order.project
+            this.review = this.project.review
+          }
+        }).catch(error => {
+
+        })
       }
     },
-    mounted() {
-      // this.init();
-    },
-    beforeMount() {
+    created() {
       this.init();
-    }
+      this.getOrder();
+    },
   }
 </script>
 

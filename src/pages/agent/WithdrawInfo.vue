@@ -14,7 +14,7 @@
         <div class="withdraw-money">{{bank}}({{bank_card}})</div>
       </div>
     </div>
-    <router-link to="/agent">
+    <router-link to="/agent/earnings">
       <div class="button">完成</div>
     </router-link>
   </div>
