@@ -210,18 +210,18 @@
     height: .44rem;
     margin: 0 auto;
   }
-  /*.icon-wait::before {*/
-    /*content: "";*/
-    /*width: .14rem;*/
-    /*height: .14rem;*/
-    /*border-radius: .07rem;*/
-    /*border: .02rem solid #ffffff;*/
-    /*position: absolute;*/
-    /*top: -.06rem;*/
-    /*right: -.04rem;*/
-    /*background: #FF5151;*/
-    /*box-sizing: border-box;*/
-  /*}*/
+  .icon-wait::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    border: 1px solid #ffffff;
+    position: absolute;
+    top: -.06rem;
+    right: -.04rem;
+    background: #FF5151;
+    box-sizing: border-box;
+  }
   .item .item-img {
     max-height: .44rem;
     max-width: .44rem;
