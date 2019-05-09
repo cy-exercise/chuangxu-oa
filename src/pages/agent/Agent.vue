@@ -38,29 +38,28 @@
             <div class="status">完成</div>
           </div>
         </div>
-        <div class="space" style="height: .4rem;"></div>
-        <div class="item-box">
-          <div class="item-wrapper">
-            <div class="item" @click="handleRoute('/agent/info')">
-              <img class="item-img" src="/static/images/agent.png" alt="">
-              <div class="item-right border-bottom">
-                <span>我的代理信息</span>
-                <img class="icon" src="/static/images/into_normal.png" alt="">
-              </div>
+      </div>
+      <div class="item-box">
+        <div class="item-wrapper">
+          <div class="item" @click="handleRoute('/agent/info')">
+            <img class="item-img" src="/static/images/agent.png" alt="">
+            <div class="item-right border-bottom">
+              <span>我的代理信息</span>
+              <img class="icon" src="/static/images/into_normal.png" alt="">
             </div>
-            <div class="item" @click="handleRoute('/agent/earnings')">
-              <img class="item-img" src="/static/images/earnings.png" alt="">
-              <div class="item-right border-bottom">
-                <span>我的收益</span>
-                <img class="icon" src="/static/images/into_normal.png" alt="">
-              </div>
+          </div>
+          <div class="item" @click="handleRoute('/agent/earnings')">
+            <img class="item-img" src="/static/images/earnings.png" alt="">
+            <div class="item-right border-bottom">
+              <span>我的收益</span>
+              <img class="icon" src="/static/images/into_normal.png" alt="">
             </div>
-            <div class="item" @click="handleRoute('/agent/quot_setting')">
-              <img class="item-img" src="/static/images/price_setting.png" alt="">
-              <div class="item-right">
-                <span>报价设置</span>
-                <img class="icon" src="/static/images/into_normal.png" alt="">
-              </div>
+          </div>
+          <div class="item" @click="handleRoute('/agent/quot_setting')">
+            <img class="item-img" src="/static/images/price_setting.png" alt="">
+            <div class="item-right">
+              <span>报价设置</span>
+              <img class="icon" src="/static/images/into_normal.png" alt="">
             </div>
           </div>
         </div>
@@ -79,7 +78,12 @@
     data() {
       return {
         selected: true,
-        user: {}
+        user: {
+          name: '',
+          avatar: {
+            url: ''
+          }
+        }
       }
     },
     methods: {
@@ -91,7 +95,7 @@
       }
     },
     created() {
-      this.init()
+      //this.init()
     }
   }
 </script>
@@ -107,9 +111,10 @@
     overflow: hidden;
   }
   .block {
-    /*height: 100%;*/
-    overflow: scroll;
-    background: #F8F8F8;
+    position: fixed;
+    top: .8rem;
+    bottom: 0;
+    /*background: #F8F8F8;*/
     /*left: 0;*/
     /*right: 0;*/
     /*overflow: scroll;*/
@@ -175,9 +180,12 @@
 
   .item-box {
     /*height: 5.76rem;*/
+    padding-top: .4rem;
     padding-left: .32rem;
     padding-right: .32rem;
     text-align: center;
+    height: 100%;
+    background: #F8F8F8;
   }
 
   .item-wrapper {
@@ -202,18 +210,18 @@
     height: .44rem;
     margin: 0 auto;
   }
-  .icon-wait::before {
-    content: "";
-    width: .14rem;
-    height: .14rem;
-    border-radius: .07rem;
-    border: .02rem solid #ffffff;
-    position: absolute;
-    top: -.06rem;
-    right: -.04rem;
-    background: #FF5151;
-    box-sizing: border-box;
-  }
+  /*.icon-wait::before {*/
+    /*content: "";*/
+    /*width: .14rem;*/
+    /*height: .14rem;*/
+    /*border-radius: .07rem;*/
+    /*border: .02rem solid #ffffff;*/
+    /*position: absolute;*/
+    /*top: -.06rem;*/
+    /*right: -.04rem;*/
+    /*background: #FF5151;*/
+    /*box-sizing: border-box;*/
+  /*}*/
   .item .item-img {
     max-height: .44rem;
     max-width: .44rem;
