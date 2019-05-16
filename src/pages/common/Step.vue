@@ -14,7 +14,7 @@
       <!--<div class="step-main-end">-->
         <!--<div class="step-icon-wrapper step-gray">-->
           <!--<div class="step-icon-gray"></div>-->
-          <!--&lt;!&ndash;<img src="/static/images/time.png" alt="">&ndash;&gt;-->
+          <!--&lt;!&ndash;<img src="@/assets/img/time.png" alt="">&ndash;&gt;-->
         <!--</div>-->
         <!--<span class="step-title">图表制作</span>-->
         <!--<span class="step-date">2018/12/29</span>-->
@@ -28,6 +28,11 @@
     name: "Step",
     props: {
       nodes: Array
+    },
+    data() {
+      return {
+
+      }
     }
   }
 </script>
@@ -57,7 +62,7 @@
     /*top: 0;*/
     /*height: .4rem;*/
     /*width: .4rem;*/
-    /*background: url("/static/images/time.png");*/
+    /*background: url("@/assets/img/time.png");*/
     /*background-repeat:no-repeat;*/
     /*background-size:100% 100%;*/
   /*}*/
@@ -78,7 +83,7 @@
   .step-icon-img {
     height: .4rem;
     width: .4rem;
-    background: url("/static/images/time.png");
+    background: url("~@/assets/img/time.png");
     background-repeat:no-repeat;
     background-size:100% 100%;
   }

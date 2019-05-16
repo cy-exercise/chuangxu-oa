@@ -13,30 +13,30 @@
       <div class="item-wrapper">
         <div class="item" @click="handleRoute(status.pending)">
           <div class="icon-wrapper">
-            <img class="item-img" src="/static/images/dollar@2x.png" alt="">
+            <img class="item-img" src="@/assets/img/dollar@2x.png" alt="">
           </div>
           <div class="item-right border-bottom">
             <span>待付款的项目</span>
-            <img class="icon" src="/static/images/into_normal.png" alt="">
+            <img class="icon" src="@/assets/img/into_normal.png" alt="">
           </div>
         </div>
         <div class="item" @click="handleRoute(status.doing)">
           <div class="icon-wrapper">
-            <img class="item-img" src="/static/images/doing.png" alt="">
+            <img class="item-img" src="@/assets/img/doing.png" alt="">
           </div>
 
           <div class="item-right border-bottom">
             <span>进行中的项目</span>
-            <img class="icon" src="/static/images/into_normal.png" alt="">
+            <img class="icon" src="@/assets/img/into_normal.png" alt="">
           </div>
         </div>
         <div class="item" @click="handleRoute(status.done)">
           <div class="icon-wrapper">
-            <img class="item-img" src="/static/images/completed.png" alt="">
+            <img class="item-img" src="@/assets/img/completed.png" alt="">
           </div>
           <div class="item-right border-bottom">
             <span>完成的项目</span>
-            <img class="icon" src="/static/images/into_normal.png" alt="">
+            <img class="icon" src="@/assets/img/into_normal.png" alt="">
           </div>
         </div>
       </div>

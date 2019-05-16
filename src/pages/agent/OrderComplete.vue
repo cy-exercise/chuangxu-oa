@@ -2,7 +2,7 @@
   <div class="wrapper">
     <Header :title="title" to="/agent/quote?status=0"></Header>
     <div class="order-item">
-      <img src="/static/images/logo.png" alt="" class="logo">
+      <img src="@/assets/img/logo.png" alt="" class="logo">
       <div class="order-title">论文润色</div>
       <div class="price">￥3409.00</div>
     </div>
@@ -32,7 +32,7 @@
     <div class="contribute-wrapper">
       <div class="contribute-title border-bottom">项目投稿人</div>
       <div class="call-container">
-        <img src="/static/images/avatar.png" alt="">
+        <img src="@/assets/img/avatar.png" alt="">
         <div class="call-info-wrapper">
           <div class="name">Kimberly Hernandez</div>
           <div class="phone">电话：{{phone}}</div>

@@ -2,7 +2,7 @@
   <div class="wrapper">
     <Header title="我的订单" to="/user/order?status=2"></Header>
     <div class="order-item">
-      <img src="/static/images/logo.png" alt="" class="logo">
+      <img src="@/assets/img/logo.png" alt="" class="logo">
       <div class="order-title">{{project.title}}</div>
       <div class="price">￥{{order.price}}</div>
       <div>

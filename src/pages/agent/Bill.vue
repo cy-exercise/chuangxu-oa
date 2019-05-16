@@ -1,12 +1,12 @@
 <template>
     <div class="wrapper">
       <!--<Header :title="title" to="/agent/earnings" ></Header>-->
-      <Empty v-show="empty_show" info="暂无零钱提现记录" icon="/static/images/bill_icon.png"></Empty>
+      <Empty v-show="empty_show" info="暂无零钱提现记录" icon="@/assets/img/bill_icon.png"></Empty>
 
       <ul class="bill-list" v-show="!empty_show">
         <li v-for="draw of draws">
           <div class="bill-icon">
-            <img src="/static/images/wallet@2x.png" alt="">
+            <img src="@/assets/img/wallet@2x.png" alt="">
           </div>
           <div class="bill-content border-bottom">
             <div class="block-title">

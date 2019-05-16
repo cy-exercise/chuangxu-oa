@@ -76,7 +76,7 @@
   .step-icon-img {
     height: .4rem;
     width: .4rem;
-    background: url("/static/images/time.png");
+    background: url("~@/assets/img/time.png");
     background-repeat:no-repeat;
     background-size:100% 100%;
   }

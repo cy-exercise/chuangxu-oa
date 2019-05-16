@@ -12,7 +12,7 @@
             <img :src="order.user.avatar.url" alt="">
             <span class="name">{{order.user.name}}</span>
             <span class="goto-price" v-show="is_show">{{action_name}}
-                <img src="/static/images/arrow_right.png" alt="">
+                <img src="@/assets/img/arrow_right.png" alt="">
               </span>
           </div>
         </li>

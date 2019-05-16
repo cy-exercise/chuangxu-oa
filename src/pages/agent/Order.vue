@@ -2,7 +2,7 @@
   <div>
     <!--<Header :title="title" to="/"></Header>-->
     <div class="order-item">
-      <img src="/static/images/logo.png" alt="" class="logo">
+      <img src="@/assets/img/logo.png" alt="" class="logo">
       <div class="order-title">{{order.project.title}}</div>
       <div class="price">￥{{order.price}}</div>
       <div>

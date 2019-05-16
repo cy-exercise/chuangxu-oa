@@ -1,11 +1,11 @@
 <template>
     <div class="wrapper">
       <div class="select-box">
-        <div class="title border-bottom"><img src="/static/images/x.png" alt="" @click="handleClose">选择提现到</div>
+        <div class="title border-bottom"><img src="@/assets/img/x.png" alt="" @click="handleClose">选择提现到</div>
         <div class="select-item">
           <ul>
             <li class="border-bottom" @click="addSelect(cards)">
-              <img src="/static/images/bank_card.png" alt="">
+              <img src="@/assets/img/bank_card.png" alt="">
               <div class="item">
                 <div class="item-title">{{cards.name}} ({{cards.account}})</div>
                 <div class="description">一次性转账≤￥20000.00</div>
@@ -13,7 +13,7 @@
             </li>
 
             <!--<li class="border-bottom" @click="addSelect('wx')">-->
-              <!--<img src="/static/images/logo-wx.png" alt="">-->
+              <!--<img src="@/assets/img/logo-wx.png" alt="">-->
               <!--<div class="item">-->
                 <!--<div class="item-title">微信</div>-->
                 <!--<div class="description">一次性转账≤￥20000.00</div>-->
@@ -21,7 +21,7 @@
             <!--</li>-->
             <router-link to="/agent/add_card">
               <li class="border-bottom">
-                <img src="/static/images/add.png" alt="">
+                <img src="@/assets/img/add.png" alt="">
                 <div class="item">
                   <div class="item-title">添加银行卡付款</div>
                   <div class="description">该交易公支持储蓄卡</div>

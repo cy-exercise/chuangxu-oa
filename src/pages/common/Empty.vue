@@ -15,7 +15,7 @@
         default: '暂无消息'
       },
       icon: {
-        default: '/static/images/empty.png'
+        default: '@/assets/img/empty.png'
       }
     }
   }

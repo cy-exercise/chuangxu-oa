@@ -135,7 +135,7 @@
     position: absolute;
     top: -.18rem;
     right: -.18rem;
-    background: url("/static/images/selected.png");
+    background: url("~@/assets/img/selected.png");
     background-size: 100% 100%;
   }
   .setting-percent {

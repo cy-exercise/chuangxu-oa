@@ -9,18 +9,18 @@
           <!--<div class="title-left">-->
             <!--<div class="title-left-item">-->
               <!--<span>提现到</span>-->
-              <!--<img src="/static/images/logo-wx.png" alt="">-->
+              <!--<img src="@/assets/img/logo-wx.png" alt="">-->
               <!--<span class="logo-name">微信</span>-->
             <!--</div>-->
           <!--</div>-->
           <!--<div class="description">一次性转账≤￥5000.00</div>-->
-          <!--<img class="into-icon" src="/static/images/into_normal.png" alt="">-->
+          <!--<img class="into-icon" src="@/assets/img/into_normal.png" alt="">-->
         <!--</div>-->
         <div class="card">
           <span class="input-title">提现到</span>
-          <img class="card-icon" src="/static/images/bank_card.png" alt="">
+          <img class="card-icon" src="@/assets/img/bank_card.png" alt="">
           <span>银行卡 ({{card.account}})</span>
-          <img class="into-icon" src="/static/images/into_normal.png" alt="">
+          <img class="into-icon" src="@/assets/img/into_normal.png" alt="">
         </div>
       </div>
       <div class="withdraw-input border-bottom">

@@ -4,7 +4,7 @@
       <div class="step-main step-border-green">
         <div class="step-icon-wrapper step-gray">
           <div class="step-icon-green"></div>
-          <!--<img src="/static/images/time.png" alt="">-->
+          <!--<img src="@/assets/img/time.png" alt="">-->
         </div>
         <span class="step-title">发起提现申请</span>
       </div>
@@ -13,7 +13,7 @@
       <div class="step-main step-border-gray">
         <div class="step-icon-wrapper step-doing">
           <div class="step-icon-img"></div>
-          <!--<img src="/static/images/time.png" alt="">-->
+          <!--<img src="@/assets/img/time.png" alt="">-->
         </div>
         <span class="step-title">后台正在处理中</span>
       </div>
@@ -22,7 +22,7 @@
       <div class="step-main-end">
         <div class="step-icon-wrapper step-gray">
           <div class="step-icon-gray"></div>
-          <!--<img src="/static/images/time.png" alt="">-->
+          <!--<img src="@/assets/img/time.png" alt="">-->
         </div>
         <span class="step-title">每周星期五我们将统一发帐</span>
       </div>
@@ -86,7 +86,7 @@
   .step-icon-img {
     height: .4rem;
     width: .4rem;
-    background: url("/static/images/time.png");
+    background: url("~@/assets/img/time.png");
     background-repeat:no-repeat;
     background-size:100% 100%;
   }

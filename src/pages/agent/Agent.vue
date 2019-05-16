@@ -20,20 +20,20 @@
           <div class="quot-item" @click="handleRoute(status.wait, 'status')">
             <div class="icon-wrapper">
               <div class="icon-wait">
-                <img src="/static/images/wait.png" alt="">
+                <img src="@/assets/img/wait.png" alt="">
               </div>
             </div>
             <div class="status">待报价</div>
           </div>
           <div class="quot-item" @click="handleRoute(status.doing, 'status')">
             <div class="icon-wrapper">
-              <img src="/static/images/doing.png" alt="">
+              <img src="@/assets/img/doing.png" alt="">
             </div>
             <div class="status">进行中</div>
           </div>
           <div class="quot-item" @click="handleRoute(status.done, 'status')">
             <div class="icon-wrapper">
-              <img src="/static/images/completed.png" alt="">
+              <img src="@/assets/img/completed.png" alt="">
             </div>
             <div class="status">完成</div>
           </div>
@@ -42,24 +42,24 @@
       <div class="item-box">
         <div class="item-wrapper">
           <div class="item" @click="handleRoute('/agent/info')">
-            <img class="item-img" src="/static/images/agent.png" alt="">
+            <img class="item-img" src="@/assets/img/agent.png" alt="">
             <div class="item-right border-bottom">
               <span>我的代理信息</span>
-              <img class="icon" src="/static/images/into_normal.png" alt="">
+              <img class="icon" src="@/assets/img/into_normal.png" alt="">
             </div>
           </div>
           <div class="item" @click="handleRoute('/agent/earnings')">
-            <img class="item-img" src="/static/images/earnings.png" alt="">
+            <img class="item-img" src="@/assets/img/earnings.png" alt="">
             <div class="item-right border-bottom">
               <span>我的收益</span>
-              <img class="icon" src="/static/images/into_normal.png" alt="">
+              <img class="icon" src="@/assets/img/into_normal.png" alt="">
             </div>
           </div>
           <div class="item" @click="handleRoute('/agent/quot_setting')">
-            <img class="item-img" src="/static/images/price_setting.png" alt="">
+            <img class="item-img" src="@/assets/img/price_setting.png" alt="">
             <div class="item-right">
               <span>报价设置</span>
-              <img class="icon" src="/static/images/into_normal.png" alt="">
+              <img class="icon" src="@/assets/img/into_normal.png" alt="">
             </div>
           </div>
         </div>
