@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-      <Header :title="title" to="/agent/withdraw"></Header>
+      <!--<Header :title="title" to="/agent/withdraw"></Header>-->
       <div class="card-wrapper">
         <div class="people">
           <div class="name">持卡人姓名</div>
@@ -35,11 +35,11 @@
 </template>
 
 <script>
-  import Header from "../common/Header"
+  // import Header from "../common/Header"
   export default {
     name: "AddCard",
     components: {
-      Header
+      // Header
     },
     data() {
       return {
@@ -174,7 +174,7 @@
 <style scoped>
   .card-wrapper {
     position: fixed;
-    top: .8rem;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;

@@ -1,32 +1,34 @@
 <template>
   <div class="step-block">
     <div class="item-title">项目进度</div>
-    <div class="step">
-      <div class="step-main step-border">
-        <div class="step-icon-wrapper step-doing">
-          <div class="step-icon-img"></div>
-          <!--<img src="/static/images/time.png" alt="">-->
+    <div class="step" v-for="(node, index) of nodes" :class="[{'step': index < nodes.length - 1}, {'step-end': index == nodes.length - 1}]">
+      <div :class="[{'step-main step-border': index < nodes.length - 1}, {'step-main-end': index == nodes.length - 1}]">
+        <div class="step-icon-wrapper" :class="[{'step-doing': node.status == 1},{'step-gray': node.status==2}]">
+          <div :class="[{'step-icon-img': node.status == 1},{'step-icon-gray': node.status==2}]"></div>
         </div>
-        <span class="step-title">图表制作</span>
-        <span class="step-date">2018/12/29</span>
+        <span class="step-title">{{node.workflow_node.title}}</span>
+        <span class="step-date">{{node.created_at}}</span>
       </div>
     </div>
-    <div class="step-end">
-      <div class="step-main-end">
-        <div class="step-icon-wrapper step-gray">
-          <div class="step-icon-gray"></div>
-          <!--<img src="/static/images/time.png" alt="">-->
-        </div>
-        <span class="step-title">图表制作</span>
-        <span class="step-date">2018/12/29</span>
-      </div>
-    </div>
+    <!--<div class="step-end">-->
+      <!--<div class="step-main-end">-->
+        <!--<div class="step-icon-wrapper step-gray">-->
+          <!--<div class="step-icon-gray"></div>-->
+          <!--&lt;!&ndash;<img src="/static/images/time.png" alt="">&ndash;&gt;-->
+        <!--</div>-->
+        <!--<span class="step-title">图表制作</span>-->
+        <!--<span class="step-date">2018/12/29</span>-->
+      <!--</div>-->
+    <!--</div>-->
   </div>
 </template>
 
 <script>
   export default {
-    name: "Step"
+    name: "Step",
+    props: {
+      nodes: Array
+    }
   }
 </script>
 

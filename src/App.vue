@@ -10,19 +10,23 @@ export default {
   methods: {
     loginCheck() {
       // 判断当前页页是否为登录页
-      if (this.$route.path == '/login') return;
-      if (!this.$cookies.get('access_token')) {
-        window.location.href = 'http://cy123.natapp1.cc/m/auth/weixin/login'
-        // window.location.href = 'https://nurse.chuangxu.cn/m/auth/weixin/login'
+      if (this.$route.path === '/login') return false;
+      let access_token = this.$cookies.get('access_token')
+      let user = localStorage.getItem('user')
+      let agent = localStorage.getItem('agent')
+
+      // 判断是否需要重新登录
+      console.log(!access_token)
+      console.log(!user && !agent)
+      if (!access_token || (!user && !agent)) {
+        window.location.href = window.baseURL + '/m/auth/weixin/login'
       }
     }
   },
   created() {
-    //console.log(1234)
     this.loginCheck()
   },
   mounted() {
-    // console.log(1234)
   }
 }
 </script>

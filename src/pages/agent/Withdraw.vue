@@ -1,7 +1,8 @@
 <template>
   <div class="wrapper">
     <SelectItem :cards="card" v-show="showSelect" :is_show="showSelect" v-on:addSelectEvent="addSelect" v-on:handleCloseEvent = "handleColse"></SelectItem>
-    <Header :title="title" to="/"></Header>
+    <!--<Header :title="title" to="/"></Header>-->
+    <div style="height: .4rem"></div>
     <div class="container">
       <div class="withdraw-title border-bottom" @click="handleSelect">
         <!--<div class="wx" v-show="!show_card">-->
@@ -41,13 +42,13 @@
 </template>
 
 <script>
-  import Header from "../common/Header"
+  // import Header from "../common/Header"
   import SelectItem from '../common/SelectItem'
   export default {
     name: "Withdraw",
     components: {
       SelectItem,
-      Header
+      // Header
     },
     data() {
       return {
@@ -130,7 +131,6 @@
     /*height: 4.87rem;*/
     background: #ffffff;
     margin-left: .32rem;
-    margin-top: .39rem;
     padding-left: .4rem;
     padding-right: .4rem;
     box-sizing: border-box;

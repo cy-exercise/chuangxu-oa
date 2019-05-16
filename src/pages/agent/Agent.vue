@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Header title="个人中心" to="/agent"></Header>
+    <!--<Header title="个人中心" to="/agent"></Header>-->
     <div class="block">
       <div class="box" style="">
         <div class="people">
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="quot-wrapper">
-          <div class="quot-item" @click="handleRoute('/agent/quot/wait')">
+          <div class="quot-item" @click="handleRoute(status.wait, 'status')">
             <div class="icon-wrapper">
               <div class="icon-wait">
                 <img src="/static/images/wait.png" alt="">
@@ -25,13 +25,13 @@
             </div>
             <div class="status">待报价</div>
           </div>
-          <div class="quot-item" @click="handleRoute('/agent/quot/doing')">
+          <div class="quot-item" @click="handleRoute(status.doing, 'status')">
             <div class="icon-wrapper">
               <img src="/static/images/doing.png" alt="">
             </div>
             <div class="status">进行中</div>
           </div>
-          <div class="quot-item" @click="handleRoute('/agent/quot/done')">
+          <div class="quot-item" @click="handleRoute(status.done, 'status')">
             <div class="icon-wrapper">
               <img src="/static/images/completed.png" alt="">
             </div>
@@ -69,11 +69,9 @@
 </template>
 
 <script>
-  import Header from '../common/Header'
   export default {
     name: "Agent",
     components: {
-      Header: Header
     },
     data() {
       return {
@@ -83,19 +81,29 @@
           avatar: {
             url: ''
           }
+        },
+        status: {
+          done: 0,
+          doing: 4,
+          wait: 11
         }
       }
     },
     methods: {
-      handleRoute(url) {
-        this.$router.push(url)
+      handleRoute(status, type = '') {
+        if (type == 'status') {
+          this.$router.push('agent/quote' + `?status=${status}`)
+        } else {
+          this.$router.push(status);
+        }
+
       },
       init() {
         this.user = JSON.parse(localStorage.getItem('user'))
       }
     },
     created() {
-      //this.init()
+      this.init()
     }
   }
 </script>
@@ -112,7 +120,7 @@
   }
   .block {
     position: fixed;
-    top: .8rem;
+    top: 0;
     bottom: 0;
     /*background: #F8F8F8;*/
     /*left: 0;*/

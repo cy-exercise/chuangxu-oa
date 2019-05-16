@@ -1,17 +1,16 @@
 <template>
   <div style="height: 100%">
-    <Header :title="title" to="/agent"></Header>
     <Empty v-show="show_empty"></Empty>
     <div class="wrapper" v-show="!show_empty">
       <ul class="quote-item" @scroll="handleScroll">
-        <li @click="handleRoute(project.id)" v-for="project in projects">
+        <li @click="handleRoute(order.id, order.project)" v-for="order in orders">
           <div class="order-title border-bottom">
-            <span class="title">{{(project.project === null) ? '' : project.project.title}}</span>
-            <span class="price">￥{{project.price}}</span>
+            <span class="title project-name">{{(order.project === null) ? '' : order.project.title}}</span>
+            <span class="price">￥{{order.price}}</span>
           </div>
           <div class="people">
-            <img :src="project.user.avatar.url" alt="">
-            <span class="name">{{project.user.name}}</span>
+            <img :src="order.user.avatar.url" alt="">
+            <span class="name">{{order.user.name}}</span>
             <span class="goto-price" v-show="is_show">{{action_name}}
                 <img src="/static/images/arrow_right.png" alt="">
               </span>
@@ -23,13 +22,12 @@
 </template>
 
 <script>
-  import Header from '../common/Header'
   import Empty from '../common/Empty'
   import { Indicator } from 'mint-ui';
   export default {
     name: "OrderQuote",
     components: {
-      Header,
+      // Header,
       Empty
     },
     data() {
@@ -37,47 +35,56 @@
         action_name: '开始报价',
         action_url: '/agent/order',
         url_map: {
-          wait: '/agent/order',
-          doing: '/agent/order_info',
-          done: '/agent/order_complete'
+          4: '/agent/order',
+          11: '/agent/order_info',
+          0: '/agent/order_complete'
         },
         name_map: {
-          wait: '开始报价',
-          doing: '详情'
+          1: '开始报价',
+          4: '详情'
         },
         is_show: false,
         complete_show: true,
         title: '待报价',
         title_map: {
-          wait: '待报价',
-          doing: '进行中',
-          done: '已完成'
+          1: '待报价',
+          4: '进行中',
+          0: '已完成'
         },
         projects: [],
         show_empty: false,
         status_map: {
-          wait: 11,
+          wait: 1,
           doing: 4,
-          done: 5
+          done: 0
         },
         isLoading: false,
         page: 1,
         orders: [],
         scloll:true,
-        pageTotal: ''
+        pageTotal: '',
+        agent: {},
+        user: {}
       }
     },
     methods: {
-      handleRoute(order_id) {
-        if (this.$route.params.status == 'wait') {
+      handleRoute(order_id, project) {
+        if (this.$route.query.status == this.status_map.wait) {
           this.$router.push(this.action_url + `/${order_id}`)
-        } else {
-          this.$router.push(this.action_url)
+          return;
+        }
+
+        if (this.$route.query.status == this.status_map.doing) {
+          let project_id = project ? project.id : ''
+          this.$router.push('/agent/order_info?order_id=' + order_id + `&project_id=${project_id}`)
+        }
+        if (this.$route.query.status == this.status_map.done) {
+          this.$router.push('/agent/order_complete?order_id=' + order_id)
         }
 
       },
       init() {
-        let status = this.$route.params.status
+        let status = this.$route.query.status
         if (this.url_map[status]) {
           this.action_url = this.url_map[status]
         }
@@ -85,7 +92,7 @@
         if (this.name_map[status]) {
           this.action_name = this.name_map[status]
         }
-        if (status === 'doing' || status === 'wait') {
+        if (status == this.status_map.doing || status == this.status_map.wait) {
           this.is_show = true
           this.complete_show = false
         } else {
@@ -96,14 +103,21 @@
         if (this.title_map[status]) {
           this.title = this.title_map[status]
         }
+
+        this.agent = JSON.parse(localStorage.getItem('agent'))
+        this.user = JSON.parse(localStorage.getItem('user'))
+        document.title= "进行中(1234)"
+
       },
       getItem(page = 1) {
         let _this = this
-        let status = this.status_map[this.$route.params.status];
+        let status = this.$route.query.status
 
         let self = this;
-        let agent_id = '91401923-c3c6-4ebf-9621-a99b8b90e4b2'
-        let user_id = '91401923-c3c6-4ebf-9621-a99b8b90e4b1'
+        // let agent_id = '91401923-c3c6-4ebf-9621-a99b8b90e4b2'
+        // let user_id = '91401923-c3c6-4ebf-9621-a99b8b90e4b1'
+        let agent_id = this.agent.id
+        let user_id = this.user.id
         this.$ajax.get(`/api/agent/${agent_id}/order` + `?status=${status}&page=${page}&meta=1&user_id=${user_id}`)
           .then(function (response) {
             if (response.data.data.data.length !== 0) {
@@ -154,20 +168,17 @@
 
 <style scoped>
   .wrapper {
-    /*height: 100%;*/
     background: #F8F8F8;
-
     text-align: center;
   }
 
   .quote-item {
-    /*height: 100%;*/
     padding-left: .32rem;
     padding-right: .32rem;
     padding-top: .2rem;
     background: #F8F8F8;
     position: fixed;
-    top:.8rem;
+    top: 0;
     left: 0;
     right:0;
     bottom: 0;
@@ -186,16 +197,21 @@
     line-height: .96rem;
     padding-left: .2rem;
     padding-right: .2rem;
+    display: flex;
+    justify-content: space-between;
   }
 
   .order-title, .people {
     border-radius: .2rem;
   }
 
-  .order-title .title {
+  .project-name {
     display: inline-block;
     float: left;
     font-size: .3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     color: #515151;
   }
 

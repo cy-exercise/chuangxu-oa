@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header :title="title" to="/" is_white="true"></Header>
+    <!--<Header :title="title" to="/" is_white="true"></Header>-->
     <Percent v-show="percent_show" v-on:addSelectEvent="handleSelect" v-on:closeEvent="handleColse" :show="percent_show"></Percent>
     <div class="setting-wrapper">
       <div class="setting-title">选择报价方式</div>
@@ -21,12 +21,12 @@
 </template>
 
 <script>
-  import Header from "../common/Header"
+  // import Header from "../common/Header"
   import Percent from "../common/Percent"
   export default {
     name: "quotSetting",
     components: {
-      Header,
+      // Header,
       Percent
     },
     data() {

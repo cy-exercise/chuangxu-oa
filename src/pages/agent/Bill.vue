@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-      <Header :title="title" to="/agent/earnings" ></Header>
+      <!--<Header :title="title" to="/agent/earnings" ></Header>-->
       <Empty v-show="empty_show" info="暂无零钱提现记录" icon="/static/images/bill_icon.png"></Empty>
 
       <ul class="bill-list" v-show="!empty_show">
@@ -28,12 +28,12 @@
 </template>
 
 <script>
-  import Header from "../common/Header"
+  // import Header from "../common/Header"
   import Empty from '../common/Empty'
   export default {
     name: "Bill",
     components: {
-      Header,
+      // Header,
       Empty
     },
     data() {

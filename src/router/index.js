@@ -57,41 +57,62 @@ export default new Router({
     // agent
     {
       path: '/',
-      redirect: '/agent'
+      redirect: '/agent',
+      meta: {
+        title: '个人中心'
+      }
     },
     {
       path: '/agent',
       name: 'Agent',
       component: Agent,
+      meta: {
+        title: '个人中心'
+      }
     },
     // 报价
     {
-      path: '/agent/quot/:status',
+      path: '/agent/quote',
       name: 'OrderQuote',
-      component: OrderQuote
+      component: OrderQuote,
+      meta: {
+        title: '报价'
+      }
     },
     // 我的收益
     {
       path: '/agent/earnings',
       name: 'Earnings',
-      component: Earnings
+      component: Earnings,
+      meta: {
+        title: '我的收益'
+      }
     },
     // 报价设置
     {
       path: '/agent/quot_setting',
       name: 'QuotSetting',
-      component: QuotSetting
+      component: QuotSetting,
+      meta: {
+        title: '报价设置'
+      }
     },
     // 我的代理信息
     {
       path: '/agent/info',
       name: 'Info',
-      component: Info
+      component: Info,
+      meta: {
+        title: '我的代理信息'
+      }
     },
     {
       path: '/agent/withdraw',
       name: 'Withdraw',
-      component: Withdraw
+      component: Withdraw,
+      meta: {
+        title: '收益提现'
+      }
     },
     {
       path: '/agent/order/:id',
@@ -106,7 +127,10 @@ export default new Router({
     {
       path: '/agent/add_card',
       name: 'AddCard',
-      component: AddCard
+      component: AddCard,
+      meta: {
+        title: '添加银行卡'
+      }
     },
     {
       path: '/agent/order_info',
@@ -126,7 +150,10 @@ export default new Router({
     {
       path: '/agent/bill',
       name: 'Bill',
-      component: Bill
+      component: Bill,
+      meta: {
+        title: '账单'
+      }
     },
 
     // user

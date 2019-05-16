@@ -16,7 +16,9 @@ Vue.config.productionTip = false;
 
 // 设置axios全局默认值
 // axios.defaults.baseURL = 'http://web.chuangxu.com'
-axios.defaults.baseURL = 'http://cy123.natapp1.cc'
+const baseURL = 'http://cy123.natapp1.cc'
+window.baseURL = baseURL
+axios.defaults.baseURL = baseURL
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + VueCookies.get('access_token')
 axios.defaults.headers['Content-Type'] = 'application/json'
 
@@ -27,11 +29,18 @@ axios.interceptors.response.use(function (response) {
   // 对响应错误做点什么
   if (error.response.status === 401) {
     let path = window.location.href.split('#')[1]
-    // window.location.href = 'https://nurse.chuangxu.com/m/auth/weixin/login' + '?target_url=' + path
-    window.location.href = 'http://cy123.natapp1.cc/m/auth/weixin/login' + '?target_url=' + path
+    window.location.href = baseURL + '/m/auth/weixin/login' + '?target_url=' + path
   }
   return Promise.reject(error);
 });
+
+// 动态设置title
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
 
 Vue.prototype.$ajax= axios
 Vue.use(MintUI)

@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-    <Header title="个人中心" to="/user"></Header>
     <div class="box" style="">
       <div class="people">
         <img class="avatar" :src="user.avatar.uri" alt="">
@@ -46,11 +45,9 @@
 </template>
 
 <script>
-  import Header from '../common/Header'
   export default {
     name: "User",
     components: {
-      Header: Header
     },
     data() {
       return {

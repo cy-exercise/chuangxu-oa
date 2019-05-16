@@ -1,9 +1,9 @@
 <template>
   <div>
-    <Header :title="title" to="/"></Header>
+    <!--<Header :title="title" to="/"></Header>-->
     <div class="order-item">
       <img src="/static/images/logo.png" alt="" class="logo">
-      <div class="order-title">论文润色</div>
+      <div class="order-title">{{order.project.title}}</div>
       <div class="price">￥{{order.price}}</div>
       <div>
         <div class="left">
@@ -42,11 +42,11 @@
 
 <script>
   import { MessageBox } from 'mint-ui';
-  import Header from "../common/Header"
+  // import Header from "../common/Header"
   export default {
     name: "Order",
     components: {
-      Header
+      // Header
     },
     data() {
       return {
@@ -95,7 +95,7 @@
       handleQuote() {
         if (!this.isActive) return false;
         let data = {
-          price: this.price
+          quoted_price: this.price
         }
         this.$ajax.put(`/api/order/${this.oder_id}`, data).then(res => {
           if (res.data.code == 200) {

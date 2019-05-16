@@ -1,33 +1,33 @@
 <template>
     <div class="wrapper">
-      <Header :title="title" to="/agent/quot/doing"></Header>
+      <!--<Header :title="title" to="/agent/quot/doing"></Header>-->
       <div class="order-item">
         <img src="/static/images/logo.png" alt="" class="logo">
-        <div class="order-title">论文润色</div>
-        <div class="price">￥3409.00</div>
+        <div class="order-title">{{project.title}}</div>
+        <div class="price">￥{{order.price}}</div>
       </div>
       <div class="step-wrapper">
-        <Step></Step>
+        <Step :nodes="project.nodes"></Step>
       </div>
       <div class="line"></div>
       <div class="item-info-wrapper">
         <div class="item-info-title border-bottom">项目详情</div>
-        <ul class="detail-block">
+        <ul class="detail-block" v-if="review">
           <li>
             <span>抄袭指数：</span>
-            <span>23%</span>
+            <span>{{review.rate}}</span>
           </li>
           <li>
             <span>字 数：</span>
-            <span>1673</span>
+            <span>{{review.word_count}}</span>
           </li>
           <li>
-            <span>原 价：：</span>
-            <span>￥4567.00</span>
+            <span>原 价：</span>
+            <span>￥{{order.price}}</span>
           </li>
           <li>
-            <span>抄袭指数：</span>
-            <span>￥5895.00</span>
+            <span>我的报价</span>
+            <span>￥{{order.quoted_price}}</span>
           </li>
         </ul>
       </div>
@@ -37,34 +37,54 @@
         <div class="call-container">
           <img src="/static/images/avatar.png" alt="">
           <div class="call-info-wrapper">
-            <div class="name">Kimberly Hernandez</div>
-            <div class="phone">电话：{{phone}}</div>
+            <div class="name">{{user.name}}</div>
+            <div class="phone">电话：{{user.phone}}</div>
           </div>
-          <div class="call-button" @click="callPhone(phone)">打电话给他</div>
+          <div class="call-button" @click="callPhone(user.phone)">打电话给他</div>
         </div>
       </div>
     </div>
 </template>
 
 <script>
-  import Header from "../common/Header"
+  // import Header from "../common/Header"
   import Step from "../common/Step"
+  import {formatDate} from "@/assets/js/date";
+
   export default {
     name: "OrderInfo",
     components: {
-      Header,
+      // Header,
       Step
     },
     data() {
       return {
         title: '项目详情',
-        phone: '18725975901'
+        project_id: '',
+        project: {},
+        order: {},
+        review: {},
+        user: {}
       }
     },
     methods: {
       callPhone(phone) {
         window.location.href = 'tel://' + phone
       },
+      getProject() {
+        let project_id = this.$route.query.project_id
+        this.$ajax.get('/api/project/' + project_id).then(res => {
+          this.project = res.data.data
+          this.order = this.project.order
+          this.review = this.project.review
+          this.user = this.project.user
+        }).catch(error => {
+
+        })
+      }
+    },
+    created() {
+      this.getProject()
     }
   }
 </script>

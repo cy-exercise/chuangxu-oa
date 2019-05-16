@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Header :title="title" to="/agent/quot/doing"></Header>
+    <Header :title="title" to="/agent/quote?status=0"></Header>
     <div class="order-item">
       <img src="/static/images/logo.png" alt="" class="logo">
       <div class="order-title">论文润色</div>
