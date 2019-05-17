@@ -1,7 +1,7 @@
 <template>
   <div class="step-block">
     <div class="item-title">项目进度</div>
-    <div class="step" v-for="(node, index) of nodes" :class="[{'step': index < nodes.length - 1}, {'step-end': index == nodes.length - 1}]">
+    <div  v-for="(node, index) of nodes" :class="[{'step': index < nodes.length - 1}, {'step-end': index == nodes.length - 1}]">
       <div :class="[{'step-main step-border': index < nodes.length - 1}, {'step-main-end': index == nodes.length - 1}]">
         <div class="step-icon-wrapper" :class="[{'step-doing': node.status == 1},{'step-gray': node.status==2}]">
           <div :class="[{'step-icon-img': node.status == 1},{'step-icon-gray': node.status==2}]"></div>
