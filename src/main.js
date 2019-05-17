@@ -15,7 +15,6 @@ import VueCookies from 'vue-cookies'
 Vue.config.productionTip = false;
 
 // 设置axios全局默认值
-// axios.defaults.baseURL = 'http://web.chuangxu.com'
 const baseURL = 'http://cy123.natapp1.cc'
 window.baseURL = baseURL
 axios.defaults.baseURL = baseURL

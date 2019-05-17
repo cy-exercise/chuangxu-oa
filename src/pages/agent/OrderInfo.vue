@@ -7,7 +7,7 @@
         <div class="price">￥{{order.price}}</div>
       </div>
       <div class="step-wrapper">
-        <Step :nodes="project.nodes"></Step>
+        <Step :nodes="nodes"></Step>
       </div>
       <div class="line"></div>
       <div class="item-info-wrapper">
@@ -64,7 +64,12 @@
         project: {},
         order: {},
         review: {},
-        user: {}
+        user: {
+          avatar: {
+            url: ''
+          }
+        },
+        nodes: []
       }
     },
     methods: {
@@ -75,6 +80,16 @@
         let project_id = this.$route.query.project_id
         this.$ajax.get('/api/project/' + project_id).then(res => {
           this.project = res.data.data
+          let nodes = []
+          for(let node of res.data.data.nodes) {
+            let d = new Date(node.created_at)
+
+            console.log(d.getFullYear())
+            node.created_at = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDay()
+            nodes.push(node)
+          }
+          this.nodes = nodes
+          console.log(nodes)
           this.order = this.project.order
           this.review = this.project.review
           this.user = this.project.user

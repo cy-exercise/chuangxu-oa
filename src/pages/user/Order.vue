@@ -67,7 +67,7 @@
           this.$router.push(`/user/order/${item.order.id}/pay`)
         } else  {
 
-          this.$router.push(this.action_url + `?title=${item.title}&price=${item.order.price}`)
+          this.$router.push(this.action_url + `?project_id=${item.id}`)
         }
       },
       init(){
@@ -128,7 +128,10 @@
   }
   .order-title {
     height: .96rem;
-    line-height: .96rem;
+    /*line-height: .96rem;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding-left: .2rem;
     padding-right: .2rem;
   }
@@ -136,8 +139,10 @@
     border-radius: .2rem;
   }
   .order-title .title {
-    display: inline-block;
-    float: left;
+    /*display: inline-block;*/
+    /*float: left;*/
+    flex: 1;
+    text-align: left;
     font-size: .3rem;
     color: #515151;
   }

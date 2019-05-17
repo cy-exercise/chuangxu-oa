@@ -10,16 +10,6 @@
         <span class="step-date">{{node.created_at}}</span>
       </div>
     </div>
-    <!--<div class="step-end">-->
-      <!--<div class="step-main-end">-->
-        <!--<div class="step-icon-wrapper step-gray">-->
-          <!--<div class="step-icon-gray"></div>-->
-          <!--&lt;!&ndash;<img src="@/assets/img/time.png" alt="">&ndash;&gt;-->
-        <!--</div>-->
-        <!--<span class="step-title">图表制作</span>-->
-        <!--<span class="step-date">2018/12/29</span>-->
-      <!--</div>-->
-    <!--</div>-->
   </div>
 </template>
 

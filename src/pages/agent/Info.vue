@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Header :title="title" to="/" is_white="true"></Header>
+    <!--<Header :title="title" to="/" is_white="true"></Header>-->
     <div class="container">
       <div class="item">
         <div class="item-title-wrapper border-bottom">
@@ -20,11 +20,11 @@
 </template>
 
 <script>
-  import Header from "../common/Header"
+  // import Header from "../common/Header"
   export default {
     name: "Info",
     components: {
-      Header: Header
+      // Header: Header
     },
     data() {
       return {

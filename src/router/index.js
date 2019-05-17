@@ -180,7 +180,10 @@ export default new Router({
     {
       path: '/user/item_info/:status',
       name: 'ItemInfo',
-      component: ItemInfo
+      component: ItemInfo,
+      meta: {
+        title: '项目详情'
+      }
     }
   ]
 })

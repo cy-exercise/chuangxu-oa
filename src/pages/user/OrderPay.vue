@@ -44,7 +44,6 @@
       handlePay() {
         let data = {
           pay_type: 21,
-          open_id: 'oWI0v1GBiAAVvDh8WUprWQjfhuFM'
         }
         let _this = this
         this.$ajax.put('/api/order/' + this.order_id + '/pay', data).then(function (res) {

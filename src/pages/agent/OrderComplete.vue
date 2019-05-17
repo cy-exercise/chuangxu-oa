@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
-    <Header :title="title" to="/agent/quote?status=0"></Header>
+    <!--<Header :title="title" to="/agent/quote?status=0"></Header>-->
     <div class="order-item">
       <img src="@/assets/img/logo.png" alt="" class="logo">
-      <div class="order-title">论文润色</div>
-      <div class="price">￥3409.00</div>
+      <div class="order-title">{{project.title}}</div>
+      <div class="price">￥{{agent_profit}}</div>
     </div>
     <div class="line"></div>
     <div class="item-info-wrapper">
@@ -12,19 +12,19 @@
       <ul class="detail-block">
         <li>
           <span>抄袭指数：</span>
-          <span>23%</span>
+          <span>{{review.rate}}</span>
         </li>
         <li>
           <span>字 数：</span>
-          <span>1673</span>
+          <span>{{review.word_count}}</span>
         </li>
         <li>
-          <span>原 价：：</span>
-          <span>￥4567.00</span>
+          <span>原 价：</span>
+          <span>￥{{order.price}}</span>
         </li>
         <li>
-          <span>抄袭指数：</span>
-          <span>￥5895.00</span>
+          <span>我的报价：</span>
+          <span>￥{{order.quoted_price}}</span>
         </li>
       </ul>
     </div>
@@ -32,34 +32,53 @@
     <div class="contribute-wrapper">
       <div class="contribute-title border-bottom">项目投稿人</div>
       <div class="call-container">
-        <img src="@/assets/img/avatar.png" alt="">
+        <img :src="avatar" alt="">
         <div class="call-info-wrapper">
-          <div class="name">Kimberly Hernandez</div>
-          <div class="phone">电话：{{phone}}</div>
+          <div class="name">{{user.name}}</div>
+          <div class="phone">电话：{{user.phone}}</div>
         </div>
-        <div class="call-button" @click="callPhone(phone)">打电话给他</div>
+        <div class="call-button" @click="callPhone(user.phone)">打电话给他</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import Header from "../common/Header"
+  // import Header from "../common/Header"
   export default {
     name: "OrderInfo",
     components: {
-      Header
+      // Header
     },
     data() {
       return {
-        title: '项目详情',
-        phone: '18725975901'
+        project: {},
+        user: {},
+        order: {},
+        review: {},
+        avatar: '',
+        agent_profit: ''
       }
     },
     methods: {
       callPhone(phone) {
         window.location.href = 'tel://' + phone
       },
+      getProject() {
+        let project_id = this.$route.query.project_id
+        this.$ajax.get('/api/project/' + project_id).then(res => {
+          console.log(res.data)
+          this.project = res.data.data
+          this.user = this.project.user
+          this.order = this.project.order
+          this.review = this.project.review
+          this.avatar = this.user.avatar.url
+          this.agent_profit = this.order.quoted_price - this.order.price
+        })
+      }
+    },
+    created() {
+      this.getProject()
     }
   }
 </script>

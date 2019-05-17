@@ -11,7 +11,7 @@
         <div class="percent-close" @click="handleClose">取消</div>
       </div>
       <ul class="percent-block">
-        <li v-for="(percent, index) in percents" :class="{selected: percent.selected}" @click="handleSelect(index)">
+        <li v-for="(percent, index) in percents" :class="[{selected: percent.selected},{selected: current === percent.num}]" @click="handleSelect(index)">
           <div class="percent-item border-bottom">
             <div class="percent-number">{{percent.num}}%</div>
             <div style="height: .96rem;line-height: .96rem; float: right;">
@@ -31,7 +31,8 @@
     props: {
       show: {
         default: false
-      }
+      },
+      current: String
     },
     data() {
       return {
@@ -52,7 +53,8 @@
             num: '50',
             selected: false
           }
-        ]
+        ],
+        agent: {}
       }
     },
     methods: {
@@ -69,7 +71,20 @@
       },
       handleClose() {
         this.$emit('closeEvent')
+      },
+      init() {
+        this.agent = JSON.parse(localStorage.getItem('agent'))
+        let quote_percent = this.agent.quote_percent
+        let index =this.percents.findIndex(item => {
+          return item.num === quote_percent
+        })
+        this.percents[index].selected = true
       }
+    },
+    created() {
+      this.init()
+    },
+    watch: {
     }
   }
 </script>

@@ -1,13 +1,13 @@
 <template>
   <div class="wrapper">
-    <Header title="项目详情" to="/user"></Header>
+    <!--<Header title="项目详情" to="/user"></Header>-->
     <div class="order-item">
       <img src="@/assets/img/logo.png" alt="" class="logo">
-      <div class="order-title">论文润色</div>
-      <div class="price">￥3409.00</div>
+      <div class="order-title">{{project.title}}</div>
+      <div class="price">￥{{project.order.price}}</div>
     </div>
     <div class="step-wrapper" v-show="step_show">
-      <Step></Step>
+      <Step :nodes="nodes"></Step>
     </div>
     <div style="height: .2rem;"></div>
     <div class="item-info-wrapper">
@@ -15,11 +15,11 @@
       <ul class="detail-block">
         <li>
           <span>抄袭指数：</span>
-          <span>23%</span>
+          <span>{{project.review ? project.review.rate : ''}}</span>
         </li>
         <li>
           <span>字 数：</span>
-          <span>1673</span>
+          <span>{{project.review ? project.review.word_count : ''}}</span>
         </li>
       </ul>
     </div>
@@ -37,7 +37,15 @@
     },
     data() {
       return {
-        step_show: false
+        step_show: false,
+        project_id: '',
+        project: {
+          order: {
+            price: ''
+          },
+          title: ''
+        },
+        nodes: []
       }
     },
     methods: {
@@ -46,10 +54,26 @@
         if (status === 'doing') {
             this.step_show = true
         }
+        this.project_id = this.$route.query.project_id
+      },
+      getProject() {
+        this.$ajax.get('api/project/' + this.project_id).then(res => {
+          this.project = res.data.data
+          let nodes = []
+          for (let node of this.project.nodes) {
+            let d = new Date(node.created_at)
+            node.created_at = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDay()
+            nodes.push(node)
+          }
+          this.nodes = nodes
+        }).catch(error => {
+          console.log(error)
+        })
       }
     },
-    mounted() {
+    created() {
       this.init()
+      this.getProject()
     }
   }
 </script>

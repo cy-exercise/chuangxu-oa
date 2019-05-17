@@ -15,7 +15,11 @@
         default: '暂无消息'
       },
       icon: {
-        default: '@/assets/img/empty.png'
+        default: require('@/assets/img/empty.png')
+      }
+    },
+    data() {
+      return {
       }
     }
   }

@@ -40,21 +40,21 @@
           0: '/agent/order_complete'
         },
         name_map: {
-          1: '开始报价',
+          11: '开始报价',
           4: '详情'
         },
         is_show: false,
         complete_show: true,
         title: '待报价',
         title_map: {
-          1: '待报价',
+          11: '待报价',
           4: '进行中',
           0: '已完成'
         },
         projects: [],
         show_empty: false,
         status_map: {
-          wait: 1,
+          wait: 11,
           doing: 4,
           done: 0
         },
@@ -69,17 +69,18 @@
     },
     methods: {
       handleRoute(order_id, project) {
+
+        let project_id = project ? project.id : ''
         if (this.$route.query.status == this.status_map.wait) {
-          this.$router.push(this.action_url + `/${order_id}`)
+          this.$router.push('/agent/order/' + `${order_id}`)
           return;
         }
 
         if (this.$route.query.status == this.status_map.doing) {
-          let project_id = project ? project.id : ''
           this.$router.push('/agent/order_info?order_id=' + order_id + `&project_id=${project_id}`)
         }
         if (this.$route.query.status == this.status_map.done) {
-          this.$router.push('/agent/order_complete?order_id=' + order_id)
+          this.$router.push('/agent/order_complete?order_id=' + order_id + `&project_id=${project_id}`)
         }
 
       },

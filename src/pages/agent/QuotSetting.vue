@@ -1,7 +1,14 @@
 <template>
   <div>
     <!--<Header :title="title" to="/" is_white="true"></Header>-->
-    <Percent v-show="percent_show" v-on:addSelectEvent="handleSelect" v-on:closeEvent="handleColse" :show="percent_show"></Percent>
+    <Percent
+      v-show="percent_show"
+      v-on:addSelectEvent="handleSelect"
+      v-on:closeEvent="handleColse"
+      :show="percent_show"
+    >
+
+    </Percent>
     <div class="setting-wrapper">
       <div class="setting-title">选择报价方式</div>
       <div class="setting-way">
@@ -14,7 +21,6 @@
       </div>
       <div class="setting-percent">设置每个项目的百分比加价作为收成（10%~50%）</div>
       <div class="percent-input" @click="openSelect">{{percent}}%</div>
-      <!--<input class="percent-input" type="text" v-model="percent" @click="openSelect">-->
       <div class="button" @click="handleSave">保存</div>
     </div>
   </div>
@@ -32,6 +38,7 @@
     data() {
       return {
         percent: 10,
+        temp_percent: '',
         selected: 'default',
         title: '报价设置',
         percent_show: false,
@@ -44,8 +51,13 @@
         this.selected = type
         if(type === 'default') {
           this.quote_type = 0
+          if (!this.percent) {
+            this.percent = this.temp_percent
+          }
         } else {
           this.quote_type = 1
+          this.temp_percent = this.percent
+          this.percent = ''
         }
       },
       handleSave() {
