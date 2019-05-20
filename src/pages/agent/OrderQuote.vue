@@ -24,6 +24,8 @@
 <script>
   import Empty from '../common/Empty'
   import { Indicator } from 'mint-ui';
+  import {getAgentOrders} from "../../api";
+
   export default {
     name: "OrderQuote",
     components: {
@@ -107,45 +109,38 @@
 
         this.agent = JSON.parse(localStorage.getItem('agent'))
         this.user = JSON.parse(localStorage.getItem('user'))
-        document.title= "进行中(1234)"
 
       },
       getItem(page = 1) {
         let _this = this
         let status = this.$route.query.status
-
-        let self = this;
-        // let agent_id = '91401923-c3c6-4ebf-9621-a99b8b90e4b2'
-        // let user_id = '91401923-c3c6-4ebf-9621-a99b8b90e4b1'
-        let agent_id = this.agent.id
-        let user_id = this.user.id
-        this.$ajax.get(`/api/agent/${agent_id}/order` + `?status=${status}&page=${page}&meta=1&user_id=${user_id}`)
-          .then(function (response) {
-            if (response.data.data.data.length !== 0) {
-              self.orders.push(...response.data.data.data)
-              //console.log(self.orders)
-              self.projects.push(...response.data.data.data);
-              self.pageTotal = response.data.data.meta.last_page;
-              if (self.page == 1) {
-                self.title = self.title + ` (${response.data.data.meta.total})`
-              }
-              self.page ++;
-
-            } else {
-              if (self.page == 1) {
-                self.show_empty = true;
-              }
+        let params = {
+          status: status,
+          page: page
+        }
+        getAgentOrders(params).then(orders => {
+          if (orders.data.length > 0) {
+            console.log(orders.data)
+            this.orders.push(...orders.data)
+            this.projects.push(...orders.data)
+            this.pageTotal = orders.meta.last_page
+            this.page ++
+          } else {
+            if(_this.page == 1) {
+              _this.show_empty = true
             }
-            self.isLoading = false
-            Indicator.close()
-          })
-          .catch(function (error) {
-            console.log(error)
-          })
+          }
+          if (page === 1) {
+            document.title = this.title + `(${orders.meta.total})`
+          }
+
+          this.isLoading = false
+          Indicator.close()
+        })
       },
       // 判断是否滚动到底部
       handleScroll(e) {
-        if(e.srcElement.scrollTop + e.srcElement.offsetHeight>e.srcElement.scrollHeight - 40 && !this.isLoading){
+        if(e.srcElement.scrollTop + e.srcElement.offsetHeight > e.srcElement.scrollHeight - 40 && !this.isLoading){
           this.loadmore()
         }
       },

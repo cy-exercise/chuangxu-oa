@@ -68,7 +68,11 @@
       init() {
         this.user = JSON.parse(localStorage.getItem('user'))
         if(!this.user) {
-          window.location.href = 'http://cy123.natapp1.cc/m/auth/weixin/login'
+          window.location.href = window.baseURL + '/m/auth/weixin/login'
+        }
+        let agent = localStorage.getItem('agent')
+        if (agent) {
+          // this.$router.push('/agent')
         }
       }
     },

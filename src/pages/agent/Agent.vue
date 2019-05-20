@@ -19,7 +19,7 @@
         <div class="quot-wrapper">
           <div class="quot-item" @click="handleRoute(status.wait, 'status')">
             <div class="icon-wrapper">
-              <div class="icon-wait">
+              <div class="icon-wait" :class="{'icon-wait-have': wait_have}">
                 <img src="@/assets/img/wait.png" alt="">
               </div>
             </div>
@@ -69,6 +69,8 @@
 </template>
 
 <script>
+  import {getAgentOrders} from "../../api";
+
   export default {
     name: "Agent",
     components: {
@@ -86,7 +88,8 @@
           done: 0,
           doing: 4,
           wait: 11
-        }
+        },
+        wait_have: false
       }
     },
     methods: {
@@ -100,10 +103,19 @@
       },
       init() {
         this.user = JSON.parse(localStorage.getItem('user'))
+      },
+      _getProjects() {
+        let params = {
+          status: this.status.wait
+        }
+        getAgentOrders(params).then(orders => {
+          this.wait_have = orders.meta.total > 0
+        })
       }
     },
     created() {
       this.init()
+      this._getProjects()
     }
   }
 </script>
@@ -122,10 +134,6 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    /*background: #F8F8F8;*/
-    /*left: 0;*/
-    /*right: 0;*/
-    /*overflow: scroll;*/
   }
 
   .people {
@@ -161,12 +169,7 @@
     font-size: .3rem;
   }
   .container {
-    /*height: 8.43rem;*/
     background: #F8F8F8;
-    /*position: fixed;*/
-    /*bottom: 0;*/
-    /*left: 0;*/
-    /*right: 0;*/
   }
   .item-title {
     font-size: .24rem;
@@ -187,7 +190,6 @@
   }
 
   .item-box {
-    /*height: 5.76rem;*/
     padding-top: .4rem;
     padding-left: .32rem;
     padding-right: .32rem;
@@ -218,7 +220,7 @@
     height: .44rem;
     margin: 0 auto;
   }
-  .icon-wait::before {
+  .icon-wait-have::before {
     content: "";
     width: 8px;
     height: 8px;

@@ -26,6 +26,7 @@ import OrderPay from '@/pages/user/OrderPay'
 import PaySuccess from '@/pages/user/PaySuccess'
 import ItemInfo from '@/pages/user/ItemInfo'
 import Step from '@/pages/common/Step'
+import StepTwo from '@/pages/common/StepTwo'
 
 // user
 
@@ -42,6 +43,11 @@ export default new Router({
       path: '/step',
       name: 'Step',
       component: Step
+    },
+    {
+      path: '/step_two',
+      name: 'StepTwo',
+      component: StepTwo
     },
     {
       path: '/percent',

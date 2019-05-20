@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header title="订单报价" to="/user"></Header>
+    <!--<Header title="订单报价" to="/user"></Header>-->
     <div class="wrapper">
       <img src="@/assets/img/order_complete.png" alt="">
       <div class="complete-title">支付成功！</div>
@@ -13,11 +13,11 @@
 </template>
 
 <script>
-  import Header from '../common/Header'
+  // import Header from '../common/Header'
   export default {
     name: "PaySuccess",
     components: {
-      Header
+      // Header
     },
     data() {
       return {

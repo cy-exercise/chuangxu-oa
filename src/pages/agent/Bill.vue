@@ -30,6 +30,7 @@
 <script>
   // import Header from "../common/Header"
   import Empty from '../common/Empty'
+  import {getDraws} from  "api"
   export default {
     name: "Bill",
     components: {
@@ -45,18 +46,19 @@
     },
     methods: {
       // 获取提现列表
-      getDraws() {
-        this.$ajax.get('/api/draw').then(res => {
-          if (res.data.data.data.length > 0) {
-            this.draws = res.data.data.data
+      _getDraws() {
+        getDraws().then(draws => {
+          if (draws.data) {
+            this.draws = draws.data
           } else {
             this.empty_show = true
           }
+
         })
       }
     },
     created() {
-      this.getDraws()
+      this._getDraws()
     }
   }
 </script>

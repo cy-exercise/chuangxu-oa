@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Header title="我的订单" to="/user/order?status=2"></Header>
+    <!--<Header title="我的订单" to="/user/order?status=2"></Header>-->
     <div class="order-item">
       <img src="@/assets/img/logo.png" alt="" class="logo">
       <div class="order-title">{{project.title}}</div>
@@ -22,9 +22,11 @@
 </template>
 
 <script>
-  import Header from '../common/Header';
+  // import Header from '../common/Header';
   import { MessageBox } from 'mint-ui';
   import wx from "weixin-js-sdk";
+  import {getOrder} from "../../api";
+
   export default {
     name: "OrderPay",
     data() {
@@ -38,7 +40,7 @@
       }
     },
     components: {
-      Header
+      // Header
     },
     methods: {
       handlePay() {
@@ -51,12 +53,10 @@
             _this.wxpay = res.data.data.data
             _this.wxPay(_this.wxpay)
             //this.$router.push('/user/pay_success')
-          } else  {
-
           }
         }).catch(function (error) {
             // console.log(error.response.data.message)
-            // MessageBox.alert(error.response.data.message)
+            MessageBox.alert(error.response.data.message)
           })
       },
       wxPay(pay) {
@@ -78,22 +78,18 @@
       init() {
         this.order_id = this.$route.params.id
       },
-      getOrder() {
-        this.$ajax.get('api/order/' + `${this.$route.params.id}`).then(res => {
-          console.log(res.data)
-          if (res.data.code == 200) {
-            this.order = res.data.data
-            this.project = this.order.project
-            this.review = this.project.review
-          }
-        }).catch(error => {
-
+      _getOrder() {
+        getOrder({} , this.$route.params.id).then(order => {
+          console.log(order)
+          this.order = order
+          this.project = order.project
+          this.review = order.project.review
         })
       }
     },
     created() {
       this.init();
-      this.getOrder();
+      this._getOrder();
     },
   }
 </script>
@@ -111,7 +107,7 @@
   }
   .order-title {
     font-size: .24rem;
-    margin-top: .2rem;
+    margin-top: .3rem;
     font-weight: 500;
   }
   .price {

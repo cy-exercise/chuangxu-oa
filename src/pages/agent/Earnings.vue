@@ -15,6 +15,7 @@
 
 <script>
   // import Header from "../common/Header"
+  import {getUserAccount} from "api"
   export default {
     name: "Earnings",
     components: {
@@ -43,18 +44,15 @@
         })
       },
       getAccount() {
-        this.$ajax.get(`/api/user/${this.$cookies.get('user_id')}/account`).then(res => {
-          this.balance = res.data.data.balance
-          if(this.balance <= 0) {
+        getUserAccount().then((account) => {
+          this.balance = account.balance
+          if (this.balance <= 0) {
             this.gray = true
           }
-        }).catch(function (error) {
-
         })
       }
     },
     created() {
-      console.log(12342)
       this.getAccount()
     }
   }

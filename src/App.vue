@@ -19,7 +19,8 @@ export default {
       console.log(!access_token)
       console.log(!user && !agent)
       if (!access_token || (!user && !agent)) {
-        window.location.href = window.baseURL + '/m/auth/weixin/login'
+        let path = this.$route.path
+        window.location.href = window.baseURL + '/m/auth/weixin/login' + `?target_url=${path}`
       }
     }
   },

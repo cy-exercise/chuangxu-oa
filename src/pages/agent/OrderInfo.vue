@@ -7,7 +7,8 @@
         <div class="price">￥{{order.price}}</div>
       </div>
       <div class="step-wrapper">
-        <Step :nodes="nodes"></Step>
+        <!--<Step :nodes="nodes"></Step>-->
+        <StepTwo :nodes="nodes"></StepTwo>
       </div>
       <div class="line"></div>
       <div class="item-info-wrapper">
@@ -49,13 +50,15 @@
 <script>
   // import Header from "../common/Header"
   import Step from "../common/Step"
+  import StepTwo from "../common/StepTwo"
   import {formatDate} from "@/assets/js/date";
 
   export default {
     name: "OrderInfo",
     components: {
       // Header,
-      Step
+      Step,
+      StepTwo
     },
     data() {
       return {
@@ -125,8 +128,8 @@
     height:60px;
   }
   .step-wrapper {
-    padding-left: 1.64rem;
-    margin-top: .8rem;
+    /*padding-left: 1.64rem;*/
+    /*margin-top: .8rem;*/
   }
   .title {
     color: #515151;

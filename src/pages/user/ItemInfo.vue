@@ -8,6 +8,7 @@
     </div>
     <div class="step-wrapper" v-show="step_show">
       <Step :nodes="nodes"></Step>
+      <!--<StepTwo></StepTwo>-->
     </div>
     <div style="height: .2rem;"></div>
     <div class="item-info-wrapper">
@@ -28,11 +29,13 @@
 
 <script>
   import Step from "../common/Step"
+  import StepTwo from "../common/StepTwo"
   import Header from "../common/Header"
   export default {
     name: "ItemInfo",
     components: {
       Step,
+      StepTwo,
       Header
     },
     data() {

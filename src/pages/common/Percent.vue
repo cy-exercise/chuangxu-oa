@@ -38,19 +38,19 @@
       return {
         percents: [
           {
-            num: '10',
+            num: 10,
             selected: false
           },    {
-            num: '20',
+            num: 20,
             selected: false
           },    {
-            num: '30',
+            num: 30,
             selected: false
           },    {
-            num: '40',
+            num: 40,
             selected: false
           },    {
-            num: '50',
+            num: 50,
             selected: false
           }
         ],
@@ -75,10 +75,13 @@
       init() {
         this.agent = JSON.parse(localStorage.getItem('agent'))
         let quote_percent = this.agent.quote_percent
+        console.log(quote_percent)
         let index =this.percents.findIndex(item => {
           return item.num === quote_percent
         })
-        this.percents[index].selected = true
+        if (index != -1) {
+          this.percents[index].selected = true
+        }
       }
     },
     created() {

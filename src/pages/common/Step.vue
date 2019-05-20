@@ -3,8 +3,8 @@
     <div class="item-title">项目进度</div>
     <div  v-for="(node, index) of nodes" :class="[{'step': index < nodes.length - 1}, {'step-end': index == nodes.length - 1}]">
       <div :class="[{'step-main step-border': index < nodes.length - 1}, {'step-main-end': index == nodes.length - 1}]">
-        <div class="step-icon-wrapper" :class="[{'step-doing': node.status == 1},{'step-gray': node.status==2}]">
-          <div :class="[{'step-icon-img': node.status == 1},{'step-icon-gray': node.status==2}]"></div>
+        <div class="step-icon-wrapper" :class="[{'step-doing': node.status == 1},{'step-gray': node.status==2 || node.status == 0}]">
+          <div :class="[{'step-icon-img': node.status == 1},{'step-icon-gray': node.status == 2 || node.status == 0}]"></div>
         </div>
         <span class="step-title">{{node.workflow_node.title}}</span>
         <span class="step-date">{{node.created_at}}</span>
@@ -46,20 +46,8 @@
   .step-border {
     border-left: 1px dashed green;
   }
-  /*.step-icon {*/
-    /*position: absolute;*/
-    /*left: -.2rem;*/
-    /*top: 0;*/
-    /*height: .4rem;*/
-    /*width: .4rem;*/
-    /*background: url("@/assets/img/time.png");*/
-    /*background-repeat:no-repeat;*/
-    /*background-size:100% 100%;*/
-  /*}*/
+
   .step-icon-wrapper {
-    /*height: .4rem;*/
-    /*opacity:1;*/
-    /*width: .4rem;*/
     position: absolute;
     top: -.05rem;
     background: #ffffff;
@@ -71,22 +59,22 @@
     left: -.09rem;
   }
   .step-icon-img {
-    height: .4rem;
-    width: .4rem;
+    height: 20px;
+    width: 20px;
     background: url("~@/assets/img/time.png");
     background-repeat:no-repeat;
     background-size:100% 100%;
   }
   .step-icon-gray {
-    height: .2rem;
-    width: .2rem;
-    border-radius: .1rem;
+    height: 10px;
+    width: 10px;
+    border-radius: 5px;
     background: #B5B5B5;
   }
   .step-icon img  {
     top: 0;
-    height: .4rem;
-    width: .4rem;
+    height: 20px;
+    width: 20px;
   }
   .step-title {
     position: absolute;
@@ -100,11 +88,9 @@
     font-weight: 400;
   }
   .step-date {
-    top: -.02rem;
+    /*top: -.02rem;*/
     position: absolute;
-    left: -1.82rem;
-    /*height: .4rem;*/
-    /*line-height: .4rem;*/
+    left: -1.92rem;
     font-size: .28rem;
     font-weight: 400;
   }

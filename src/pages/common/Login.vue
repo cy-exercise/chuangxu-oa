@@ -25,12 +25,19 @@
       },
       // 如果能获取到代理信息就说明他是个代理
       getAgents() {
+        let path = this.$route.query.target_url
+        //console.log(path)
         this.$ajax.get('/api/agent').then(res => {
-          if (res.data.data.data.length > 0) {
-            localStorage.setItem('agent', JSON.stringify(res.data.data.data[0]))
-            this.$router.push('/agent')
+
+          if (path == '/user') {
+            if (res.data.data.data.length > 0) {
+              localStorage.setItem('agent', JSON.stringify(res.data.data.data[0]))
+              this.$router.push('/agent')
+            } else {
+              this.$router.push('/user')
+            }
           } else {
-            this.$router.push('/user')
+            this.$router.push(path)
           }
         })
 

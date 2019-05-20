@@ -1,6 +1,6 @@
 <template>
   <div style="height: 100%" >
-    <Header :title="title" to="/user"></Header>
+    <!--<Header :title="title" to="/user"></Header>-->
     <Empty v-show="show_empty"></Empty>
     <div class="wrapper" v-show="!show_empty">
       <ul class="quote-item">
@@ -22,12 +22,13 @@
 </template>
 
 <script>
-  import Header from '../common/Header'
+  // import Header from '../common/Header'
   import Empty from '../common/Empty'
+  import {getProjects} from "../../api";
   export default {
     name: "UserOrder",
     components: {
-      Header,
+      // Header,
       Empty
     },
     data() {
@@ -85,25 +86,23 @@
           this.title = this.title_map[status]
         }
       },
-      getItem() {
-        let page = 1;
-        let status = this.status;
-        let self = this;
-        let query = `?status=${status}&page=${page}`
-        this.$ajax.get('api/project' + query).then(res => {
-          // console.log(res.data)
-          if (res.data.data.length === 0) {
+      getItems() {
+        let params = {
+          status: this.status,
+          size: 100
+        }
+        getProjects(params).then(projects => {
+          if (!projects) {
             this.show_empty = true
           }
-          this.order_list = res.data.data
-        }).catch(error => {
-
+          this.order_list = projects
+          document.title = this.title_map[this.status_map[status]] + ` (${projects.length})`
         })
       }
     },
     created() {
       this.init();
-      this.getItem()
+      this.getItems()
     }
   }
 </script>
@@ -111,6 +110,7 @@
 <style scoped>
   .wrapper {
     height: 100%;
+    overflow: auto;
     background: #F8F8F8;
     padding-left: .32rem;
     padding-right: .32rem;
@@ -139,8 +139,6 @@
     border-radius: .2rem;
   }
   .order-title .title {
-    /*display: inline-block;*/
-    /*float: left;*/
     flex: 1;
     text-align: left;
     font-size: .3rem;
