@@ -53,7 +53,11 @@
       return {
         selected: true,
         order_url: '/user/order',
-        user: {},
+        user: {
+          avatar: {
+            uri: ''
+          }
+        },
         status: {
           pending: 2, //待付款
           doing: 4, // 进行中
@@ -113,7 +117,8 @@
     z-index: -1;
     content: '';
     border-radius: 0 0 50% 50%;
-    background: linear-gradient(top, #50B8F3, #448EF6);;
+    background: linear-gradient(top, #50B8F3, #448EF6);
+    background: -webkit-gradient(linear, left top, left bottom, from(#50B8F3), to(#448EF6));
   }
 
   .people .avatar {

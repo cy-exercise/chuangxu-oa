@@ -20,14 +20,12 @@ export default {
       console.log(!user && !agent)
       if (!access_token || (!user && !agent)) {
         let path = this.$route.path
-        window.location.href = window.baseURL + '/m/auth/weixin/login' + `?target_url=${path}`
+        window.location.href = window.baseURL + '/m/auth/weixin/login' + `?target_url=${path}` + `&source=13`
       }
     }
   },
   created() {
     this.loginCheck()
-  },
-  mounted() {
   }
 }
 </script>

@@ -42,8 +42,8 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsSubDirectory: 'wechat',
+    assetsPublicPath: 'https://assets.chuangxu.cn/',
 
     /**
      * Source Maps

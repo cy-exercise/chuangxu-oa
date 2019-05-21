@@ -20,7 +20,7 @@
             <input type="text" placeholder="请输入银行卡号码" v-model="bank_card">
           </div>
         </div>
-        <div class="button" :class="{ready: bank && bank_card && people_name}" @click="handleAdd">确定</div>
+        <div class="button" :class="{ready: bank && bank_card.length > 10 && people_name}" @click="handleAdd">确定</div>
       </div>
 
       <mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
@@ -36,6 +36,8 @@
 
 <script>
   // import Header from "../common/Header"
+  import { MessageBox } from 'mint-ui';
+
   export default {
     name: "AddCard",
     components: {
@@ -112,38 +114,34 @@
       }
     },
     methods: {
-      handleClick() {
+      handleAdd() {
         if (! this.bank_card) {
-          alert('请输入卡号: ')
+          MessageBox.alert('请输入卡号: ')
           return false;
         }
         if (! this.people_name) {
-          alert('请输入姓名：')
+          MessageBox.alert('请输入姓名：')
           return false;
         }
-        let data = {
-          card_num: this.card_number,
-          name: this.people_name
-        };
-        if (this.addCard(data)) {
-          this.$router.push({path: '/withdraw'})
-        }
+
+        this.addCard()
       },
-      addCard(data) {
-        return true;
-      },
-      handleAdd() {
-        if (this.bank && this.bank_card && this.people_name) {
+
+      addCard() {
+        if (this.bank && this.bank_card.length > 10 && this.people_name) {
           // 修改银行卡信息
           let data = {
             bank: this.bank,
             bank_card: this.bank_card,
             name: this.people_name
           }
-          this.$ajax.put(`/api/agent/${this.agent.id}`, data).then(res => {
-            console.log(res.data)
-          }).catch(error => {
-
+          this.$ajax.post('/agent/' + agent.id, data).then(res => {
+            let agent = res.data.data()
+            if (agent) {
+              localStorage.setItem('agent', JSON.stringify(agent))
+              MessageBox.alert('修改成功')
+            }
+            this.$router.back()
           })
         }
       },

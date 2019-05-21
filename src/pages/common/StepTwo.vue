@@ -3,7 +3,7 @@
     <article>
       <div class="step-title">项目进度</div>
       <section v-for="node of nodes" :class="[{'current': node.status == 1}, {'complete': node.status == 2}, {'undo': node.status == 0}]">
-        <span class="point-time point-green"></span>
+        <span class="point-time"></span>
         <time datetime="2013-03">
           <span>{{node.created_at}}</span>
         </time>
@@ -72,7 +72,7 @@
     left: 50%;
     background: #B5B5B5;
     margin-left: -9px;
-    background: url("/static/images/time.png");
+    background: url("~@/assets/img/time.png");
     background-size:100% 100%;
   }
   .step article section time {

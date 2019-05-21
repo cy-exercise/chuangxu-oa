@@ -28,7 +28,7 @@
         let path = this.$route.query.target_url
         //console.log(path)
         this.$ajax.get('/api/agent').then(res => {
-
+          console.log(res.data)
           if (path == '/user') {
             if (res.data.data.data.length > 0) {
               localStorage.setItem('agent', JSON.stringify(res.data.data.data[0]))

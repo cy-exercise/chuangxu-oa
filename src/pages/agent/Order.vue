@@ -3,8 +3,8 @@
     <!--<Header :title="title" to="/"></Header>-->
     <div class="order-item">
       <img src="@/assets/img/logo.png" alt="" class="logo">
-      <div class="order-title">{{order.project.title}}</div>
-      <div class="price">￥{{order.price}}</div>
+      <div class="order-title">{{order.project ? order.project.title : ''}}</div>
+      <div class="price">￥{{order ? order.price : ''}}</div>
       <div>
         <div class="left">
           <div class="index">{{review ? review.rate: ''}}</div>

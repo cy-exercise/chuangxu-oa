@@ -44,6 +44,8 @@
 <script>
   // import Header from "../common/Header"
   import SelectItem from '../common/SelectItem'
+  import {draw} from "../../api";
+  import { MessageBox } from 'mint-ui';
   export default {
     name: "Withdraw",
     components: {
@@ -84,12 +86,17 @@
         if (!this.total) {
           return false;
         }
+        console.log(this.total)
+        console.log(this.total > this.balance)
+        if (this.total > this.balance) {
+          MessageBox.alert('提现金额过大')
+          return false
+        }
         let data = {
           amount: this.total
         };
-        this.$ajax.post('/api/draw', data).then(res => {
-
-          if (res.data.code === 200) {
+        draw(data).then(res => {
+          if (res) {
             this.$router.push({
               path: '/agent/withdraw_info',
               query: {
@@ -99,22 +106,19 @@
               }
             })
           }
-        }).catch(error => {
-
         })
       },
       handleAll() {
         this.total = this.balance
       },
       init() {
-        this.balance = this.$route.query.balance
+        this.balance = + this.$route.query.balance
         this.agent = JSON.parse(localStorage.getItem('agent'))
         this.card.name = this.agent.bank
         this.card.account = this.agent.bank_card
       }
     },
     mounted() {
-      console.log(localStorage.getItem('agent'))
       this.init()
       this.$refs.withdraw.focus()
     }

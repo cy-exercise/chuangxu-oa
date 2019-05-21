@@ -1,10 +1,6 @@
-import { get, post } from './helpers'
+import { get, post, put } from './helpers'
 
-const user_id = JSON.parse(localStorage.getItem('user')).id;
-const agent_id = JSON.parse(localStorage.getItem('agent')).id;
 
-// 获取用户账户
-const getUserAccount = get(`user/${user_id}/account`)
 // 提现列表
 const getDraws = get(`draw`)
 
@@ -13,12 +9,11 @@ const getProjects = get('project')
 
 const getOrder = get('order')
 
-const getAgentOrders = get(`agent/${agent_id}/order`)
+const draw = post('draw')
 
 export {
-  getUserAccount,
   getDraws,
   getProjects,
   getOrder,
-  getAgentOrders
+  draw
 }

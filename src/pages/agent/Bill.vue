@@ -3,7 +3,7 @@
       <!--<Header :title="title" to="/agent/earnings" ></Header>-->
       <Empty v-show="empty_show" info="暂无零钱提现记录" icon="@/assets/img/bill_icon.png"></Empty>
 
-      <ul class="bill-list" v-show="!empty_show">
+      <ul class="bill-list" v-show="!empty_show" @scroll="handleScroll">
         <li v-for="draw of draws">
           <div class="bill-icon">
             <img src="@/assets/img/wallet@2x.png" alt="">
@@ -31,6 +31,7 @@
   // import Header from "../common/Header"
   import Empty from '../common/Empty'
   import {getDraws} from  "api"
+  import { Indicator } from 'mint-ui';
   export default {
     name: "Bill",
     components: {
@@ -41,20 +42,43 @@
       return {
         title: '账单',
         empty_show: false,
-        draws: []
+        draws: [],
+        isLoading: false,
+        page: 1,
+        pageTotal: ''
       }
     },
     methods: {
       // 获取提现列表
       _getDraws() {
-        getDraws().then(draws => {
+        let params = {
+          page: this.page
+        }
+        getDraws(params).then(draws => {
           if (draws.data) {
-            this.draws = draws.data
+            this.draws.push(...draws.data)
+            this.isLoading = false
+            Indicator.close()
+            this.page ++
+            this.pageTotal = draws.meta.last_page
           } else {
             this.empty_show = true
           }
 
         })
+      },
+      // 判断是否滚动到底部
+      handleScroll(e) {
+        if(e.srcElement.scrollTop + e.srcElement.offsetHeight > e.srcElement.scrollHeight - 10 && !this.isLoading){
+          this.loadmore()
+        }
+      },
+      loadmore() {
+        if (this.page <= this.pageTotal) {
+          this.isLoading = true
+          Indicator.open('加载中...');
+          this._getDraws()
+        }
       }
     },
     created() {
@@ -78,6 +102,10 @@
   .icon-wrapper img {
     height: .44rem;
     width: .4rem;
+  }
+  .bill-list {
+    height: 100%;
+    overflow: auto;
   }
   .bill-list li {
     height: 1.45rem;

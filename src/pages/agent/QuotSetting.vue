@@ -12,10 +12,10 @@
     <div class="setting-wrapper">
       <div class="setting-title">选择报价方式</div>
       <div class="setting-way">
-        <div class="default-way border quote" v-bind:class="{selected: selected === 'default'}" @click="handleClick('default')">默认报价
+        <div class="default-way border quote" v-bind:class="{'selected': selected === 'default'}" @click="handleClick('default')">默认报价
           <i class="" :class="{selected_img: selected === 'default'}"></i>
         </div>
-        <div class="default-times border quote" v-bind:class="{selected: selected === 'times'}" @click="handleClick('times')">每次报价
+        <div class="default-times border quote" v-bind:class="{'selected': selected === 'times'}" @click="handleClick('times')">每次报价
           <i class="" :class="{selected_img: selected === 'times'}"></i>
         </div>
       </div>

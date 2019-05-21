@@ -15,7 +15,7 @@
 
 <script>
   // import Header from "../common/Header"
-  import {getUserAccount} from "api"
+  import {get} from "api"
   export default {
     name: "Earnings",
     components: {
@@ -44,7 +44,9 @@
         })
       },
       getAccount() {
-        getUserAccount().then((account) => {
+        let user_id = JSON.parse(localStorage.getItem('user')).id
+        this.$ajax.get(`/api/user/${user_id}/account`).then(res => {
+          let account = res.data.data
           this.balance = account.balance
           if (this.balance <= 0) {
             this.gray = true

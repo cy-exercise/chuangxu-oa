@@ -69,7 +69,6 @@
 </template>
 
 <script>
-  import {getAgentOrders} from "../../api";
 
   export default {
     name: "Agent",
@@ -89,12 +88,13 @@
           doing: 4,
           wait: 11
         },
-        wait_have: false
+        wait_have: false,
+        agent: {}
       }
     },
     methods: {
       handleRoute(status, type = '') {
-        if (type == 'status') {
+        if (type === 'status') {
           this.$router.push('agent/quote' + `?status=${status}`)
         } else {
           this.$router.push(status);
@@ -103,19 +103,20 @@
       },
       init() {
         this.user = JSON.parse(localStorage.getItem('user'))
+        this.agent = JSON.parse(localStorage.getItem('agent'))
       },
-      _getProjects() {
+      getProjects() {
         let params = {
           status: this.status.wait
         }
-        getAgentOrders(params).then(orders => {
-          this.wait_have = orders.meta.total > 0
+        this.$ajax.get('/api/agent/' + this.agent.id + '/order',{params: params}).then(res => {
+          this.wait_have = res.data.data.data.length > 0
         })
       }
     },
     created() {
       this.init()
-      this._getProjects()
+      this.getProjects()
     }
   }
 </script>

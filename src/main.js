@@ -15,6 +15,7 @@ import VueCookies from 'vue-cookies'
 Vue.config.productionTip = false;
 
 // 设置axios全局默认值
+// const baseURL = 'https://www.chuangxu.cn'
 const baseURL = 'http://cy123.natapp1.cc'
 window.baseURL = baseURL
 axios.defaults.baseURL = baseURL
@@ -28,7 +29,7 @@ axios.interceptors.response.use(function (response) {
   // 对响应错误做点什么
   if (error.response.status === 401) {
     let path = window.location.href.split('#')[1]
-    window.location.href = baseURL + '/m/auth/weixin/login' + '?target_url=' + path
+    window.location.href = baseURL + '/m/auth/weixin/login' + '?target_url=' + path + "&source=13"
   }
   return Promise.reject(error);
 });

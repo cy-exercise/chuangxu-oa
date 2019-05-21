@@ -24,8 +24,6 @@
 <script>
   import Empty from '../common/Empty'
   import { Indicator } from 'mint-ui';
-  import {getAgentOrders} from "../../api";
-
   export default {
     name: "OrderQuote",
     components: {
@@ -118,7 +116,10 @@
           status: status,
           page: page
         }
-        getAgentOrders(params).then(orders => {
+        this.$ajax.get('/api/agent/' + this.agent.id + '/order',{
+          params: params
+        }).then(res => {
+          let orders = res.data.data
           if (orders.data.length > 0) {
             console.log(orders.data)
             this.orders.push(...orders.data)
@@ -155,7 +156,7 @@
     mounted() {
 
     },
-    beforeMount() {
+    created() {
       this.init();
       this.getItem();
     }
