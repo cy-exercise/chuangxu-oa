@@ -44,7 +44,7 @@
 <script>
   // import Header from "../common/Header"
   import SelectItem from '../common/SelectItem'
-  import {draw} from "../../api";
+  import {draw} from "api";
   import { MessageBox } from 'mint-ui';
   export default {
     name: "Withdraw",
@@ -63,7 +63,8 @@
         },
         total: '',
         balance: '',
-        agent: {}
+        agent: {},
+        submit: false
       }
     },
     methods: {
@@ -86,12 +87,15 @@
         if (!this.total) {
           return false;
         }
-        console.log(this.total)
-        console.log(this.total > this.balance)
         if (this.total > this.balance) {
           MessageBox.alert('提现金额过大')
           return false
         }
+        if (this.submit) {
+          MessageBox.alert('重复提交')
+          return false
+        }
+        this.submit = true
         let data = {
           amount: this.total
         };

@@ -69,6 +69,8 @@
 </template>
 
 <script>
+  import {getAgentOrders} from 'api'
+  import {getStore} from "../../config/Utils";
 
   export default {
     name: "Agent",
@@ -102,15 +104,15 @@
 
       },
       init() {
-        this.user = JSON.parse(localStorage.getItem('user'))
-        this.agent = JSON.parse(localStorage.getItem('agent'))
+        this.user = JSON.parse(getStore('user'))
+        this.agent = JSON.parse(getStore('agent'))
       },
       getProjects() {
         let params = {
           status: this.status.wait
         }
-        this.$ajax.get('/api/agent/' + this.agent.id + '/order',{params: params}).then(res => {
-          this.wait_have = res.data.data.data.length > 0
+        getAgentOrders(this.agent.id, params).then(orders => {
+          this.wait_have = orders.data.length
         })
       }
     },
@@ -154,7 +156,8 @@
     z-index: -1;
     content: '';
     border-radius: 0 0 50% 50%;
-    background: linear-gradient(top, #50B8F3, #448EF6);;
+    background: linear-gradient(top, #50B8F3, #448EF6);
+    background: -webkit-gradient(linear, left top, left bottom, from(#50B8F3), to(#448EF6));
   }
 
   .people .avatar {

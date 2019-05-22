@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="box" style="">
       <div class="people">
-        <img class="avatar" :src="user.avatar.uri" alt="">
+        <img class="avatar" :src="user.avatar ? user.avatar.uri : ''" alt="">
         <div class="nickname">
           {{user.name}}
         </div>

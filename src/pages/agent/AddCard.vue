@@ -37,7 +37,7 @@
 <script>
   // import Header from "../common/Header"
   import { MessageBox } from 'mint-ui';
-
+  import {updateAgent} from 'api'
   export default {
     name: "AddCard",
     components: {
@@ -135,8 +135,7 @@
             bank_card: this.bank_card,
             name: this.people_name
           }
-          this.$ajax.post('/agent/' + agent.id, data).then(res => {
-            let agent = res.data.data()
+          updateAgent(this.agent.id, data).then(agent => {
             if (agent) {
               localStorage.setItem('agent', JSON.stringify(agent))
               MessageBox.alert('修改成功')
@@ -147,7 +146,6 @@
       },
       onYearChange(picker, values) {
         this.year = values[0];
-        // console.log(this.year)
       },
       handleCancel() {
         this.popupVisible = false

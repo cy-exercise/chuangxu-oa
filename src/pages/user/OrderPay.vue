@@ -25,8 +25,7 @@
   // import Header from '../common/Header';
   import { MessageBox } from 'mint-ui';
   import wx from "weixin-js-sdk";
-  import {getOrder} from "../../api";
-
+  import {getUserOrder, orderPay} from 'api'
   export default {
     name: "OrderPay",
     data() {
@@ -36,7 +35,6 @@
         status: '',
         order: {},
         review: {},
-        wxpay: {}
       }
     },
     components: {
@@ -48,18 +46,12 @@
           pay_type: 21,
         }
         let _this = this
-        this.$ajax.put('/api/order/' + this.order_id + '/pay', data).then(function (res) {
-          if (res.data.code ==200) {
-            _this.wxpay = res.data.data.data
-            _this.wxPay(_this.wxpay)
-            //this.$router.push('/user/pay_success')
-          }
-        }).catch(function (error) {
-            // console.log(error.response.data.message)
-            MessageBox.alert(error.response.data.message)
-          })
+        orderPay(this.order_id, data).then(res => {
+          this.wxPay(res.data)
+        })
       },
       wxPay(pay) {
+        let _this = this
         wx.chooseWXPay({
           timestamp: pay.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
           nonceStr: pay.nonceStr, // 支付签名随机串，不长于 32 位
@@ -69,6 +61,7 @@
           success: function (res) {
               // 支付成功后的回调函数
             console.log(res)
+            _this.$router.push('/user/pay_success')
           },
           fail: function (res) {
             alert(JSON.stringify(res))
@@ -76,11 +69,10 @@
         });
       },
       init() {
-        this.order_id = this.$route.params.id
+        this.order_id = this.$route.query.order_id
       },
-      _getOrder() {
-        getOrder({} , this.$route.params.id).then(order => {
-          console.log(order)
+      getOrder() {
+        getUserOrder(this.order_id).then(order => {
           this.order = order
           this.project = order.project
           this.review = order.project.review
@@ -89,7 +81,7 @@
     },
     created() {
       this.init();
-      this._getOrder();
+      this.getOrder();
     },
   }
 </script>

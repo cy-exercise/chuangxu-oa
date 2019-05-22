@@ -12,12 +12,18 @@ import './assets/style/border.css'
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
 
+VueCookies.config('1m')
+
 Vue.config.productionTip = false;
 
 // 设置axios全局默认值
-// const baseURL = 'https://www.chuangxu.cn'
-const baseURL = 'http://cy123.natapp1.cc'
+const urlMap = {
+  development: 'http://cy123.natapp1.cc',
+  production: 'https://www.chuangxu.cn'
+}
+const baseURL = urlMap[process.env.NODE_ENV]
 window.baseURL = baseURL
+
 axios.defaults.baseURL = baseURL
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + VueCookies.get('access_token')
 axios.defaults.headers['Content-Type'] = 'application/json'
@@ -33,7 +39,7 @@ axios.interceptors.response.use(function (response) {
   }
   return Promise.reject(error);
 });
-
+window.axios = axios
 // 动态设置title
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {

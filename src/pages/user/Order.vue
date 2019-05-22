@@ -24,7 +24,7 @@
 <script>
   // import Header from '../common/Header'
   import Empty from '../common/Empty'
-  import {getProjects} from "../../api";
+  import {getProjects} from "api";
   export default {
     name: "UserOrder",
     components: {
@@ -63,16 +63,16 @@
     },
     methods: {
       handleRoute(item) {
-        if (this.status == 2) {
+        if (this.status === 2) {
 
-          this.$router.push(`/user/order/${item.order.id}/pay`)
+          this.$router.push(`/user/order/pay?order_id=${item.order.id}`)
         } else  {
 
           this.$router.push(this.action_url + `?project_id=${item.id}`)
         }
       },
       init(){
-        this.status = this.$route.query.status;
+        this.status = + this.$route.query.status;
         let status = this.status_map[this.status];
         if (this.url_map[status]) {
           this.action_url = this.url_map[status]
@@ -86,14 +86,15 @@
           this.title = this.title_map[status]
         }
       },
-      getItems() {
+      _getProjects() {
         let params = {
           status: this.status,
           size: 100
         }
         getProjects(params).then(projects => {
-          if (!projects) {
+          if (projects.length < 1) {
             this.show_empty = true
+            return
           }
           this.order_list = projects
           document.title = this.title_map[this.status_map[status]] + ` (${projects.length})`
@@ -102,7 +103,7 @@
     },
     created() {
       this.init();
-      this.getItems()
+      this._getProjects()
     }
   }
 </script>

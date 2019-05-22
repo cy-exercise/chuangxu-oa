@@ -174,7 +174,7 @@ export default new Router({
       component: UserOrder
     },
     {
-      path: '/user/order/:id/pay',
+      path: '/user/order/pay',
       name: 'OrderPay',
       component: OrderPay
     },
