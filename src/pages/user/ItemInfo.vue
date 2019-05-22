@@ -7,10 +7,10 @@
       <div class="price">￥{{project.order.price}}</div>
     </div>
     <div class="step-wrapper" v-show="step_show">
-      <Step :nodes="nodes"></Step>
-      <!--<StepTwo></StepTwo>-->
+      <!--<Step :nodes="nodes"></Step>-->
+      <StepTwo :nodes="nodes"></StepTwo>
     </div>
-    <div style="height: .2rem;"></div>
+    <!--<div style="height: .2rem;"></div>-->
     <div class="item-info-wrapper">
       <div class="item-info-title border-bottom">项目详情</div>
       <ul class="detail-block">
@@ -91,7 +91,7 @@
     text-align: center;
     background: #ffffff;
     padding-top: .6rem;
-    padding-bottom: .8rem;
+    /*padding-bottom: .8rem;*/
   }
   .order-title {
     font-size: .24rem;
@@ -138,6 +138,6 @@
   }
   .step-wrapper {
     background: #ffffff;
-    padding-left: 1.64rem;
+    /*padding-left: 1.64rem;*/
   }
 </style>

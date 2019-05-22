@@ -26,7 +26,7 @@
 
 <style scoped>
   .step-title {
-    margin-top: .8rem;
+    padding-top: .8rem;
     margin-left: 24%;
     font-size: .3rem;
   }
