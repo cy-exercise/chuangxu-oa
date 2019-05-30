@@ -176,7 +176,10 @@ export default new Router({
     {
       path: '/user/order/pay',
       name: 'OrderPay',
-      component: OrderPay
+      component: OrderPay,
+      meta: {
+        title: '我的订单'
+      }
     },
     {
       path: '/user/pay_success',

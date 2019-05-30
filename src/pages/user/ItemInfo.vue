@@ -20,7 +20,7 @@
         </li>
         <li>
           <span>字 数：</span>
-          <span>{{project.review ? project.review.word_count : ''}}</span>
+          <span>{{project.manuscripts && project.manuscripts[0] ? project.manuscripts[0].extra.word_count : ''}}</span>
         </li>
       </ul>
     </div>
@@ -48,7 +48,8 @@
           },
           title: ''
         },
-        nodes: []
+        nodes: [],
+        manuscripts: []
       }
     },
     methods: {
@@ -64,8 +65,7 @@
           this.project = res.data.data
           let nodes = []
           for (let node of this.project.nodes) {
-            let d = new Date(node.created_at)
-            node.created_at = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDay()
+            node.updated_at = node.updated_at.replace(/-/g, "/").substring(0,11)
             nodes.push(node)
           }
           this.nodes = nodes

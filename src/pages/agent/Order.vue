@@ -3,7 +3,7 @@
     <!--<Header :title="title" to="/"></Header>-->
     <div class="order-item">
       <img src="@/assets/img/logo.png" alt="" class="logo">
-      <div class="order-title">{{order.project ? order.project.title : ''}}</div>
+      <div class="order-title">{{project ? project.title : ''}}</div>
       <div class="price">￥{{order ? order.price : ''}}</div>
       <div>
         <div class="left">
@@ -11,14 +11,14 @@
           <div class="index-title">抄袭指数</div>
         </div>
         <div class="right">
-          <div class="word-number">{{review ? review.word_count : ''}}</div>
+          <div class="word-number">{{project.manuscripts && project.manuscripts[0] ? project.manuscripts[0].extra.word_count : ''}}</div>
           <div class="word">字数</div>
         </div>
       </div>
     </div>
     <!-- 打电话 -->
     <div class="call-container">
-      <img :src="user.avatar.url" alt="">
+      <img :src="user.avatar ? user.avatar.url : ''" alt="">
       <div class="call-info-wrapper">
         <div class="name">{{user.name}}</div>
         <div class="phone">电话：{{user.phone}}</div>
@@ -43,6 +43,8 @@
 <script>
   import { MessageBox } from 'mint-ui';
   // import Header from "../common/Header"
+  import {getProject} from "../../api";
+
   export default {
     name: "Order",
     components: {
@@ -58,6 +60,7 @@
         redirect: '/agent/quote_success',
         title: '订单报价',
         oder_id: '',
+        project_id: '',
         order: '',
         review: '',
         user: {
@@ -66,7 +69,8 @@
           avatar: {
             url: ''
           }
-        }
+        },
+        project: {}
       }
     },
     methods: {
@@ -74,7 +78,7 @@
         let _this = this;
         MessageBox.prompt('请输入金额', '我的报价').then(({ value, action }) => {
 
-          if (value <= _this.order.price) {
+          if (value <= ~~_this.order.price) {
             return false
           }
           if (value) {
@@ -95,7 +99,7 @@
       handleQuote() {
         if (!this.isActive) return false;
         let data = {
-          quoted_price: this.price
+          price: this.price
         }
         this.$ajax.put(`/api/order/${this.oder_id}`, data).then(res => {
           if (res.data.code == 200) {
@@ -111,17 +115,24 @@
         })
       },
       getOrder() {
-        this.$ajax.get(`/api/order/${this.oder_id}`).then(res => {
-          // console.log(res.data)
-          this.order = res.data.data
-          this.review = this.order.project.review
-          this.user = this.order.user
-        }).catch(error => {
-
-        })
+        getProject(this.project_id).then(project => {
+          this.order = project.order
+          this.review = project.review
+          this.user = project.user
+          this.project = project
+        });
+        // this.$ajax.get(`/api/order/${this.oder_id}`).then(res => {
+        //   // console.log(res.data)
+        //   this.order = res.data.data
+        //   this.review = this.order.project.review
+        //   this.user = this.order.user
+        // }).catch(error => {
+        //
+        // })
       },
       init() {
         this.oder_id = this.$route.params.id
+        this.project_id = this.$route.query.project_id
       }
     },
     created() {
@@ -136,7 +147,6 @@
     height: 5.69rem;
     position: relative;
     text-align: center;
-    margin-top: 1.2rem;
   }
   .order-title {
     font-size: .24rem;

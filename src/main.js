@@ -18,8 +18,8 @@ Vue.config.productionTip = false;
 
 // 设置axios全局默认值
 const urlMap = {
-  development: 'http://cy123.natapp1.cc',
-  production: 'https://www.chuangxu.cn'
+  development: 'http://chuangxu.natapp4.cc',
+  production: 'http://chuangxu.natapp4.cc'
 }
 const baseURL = urlMap[process.env.NODE_ENV]
 window.baseURL = baseURL

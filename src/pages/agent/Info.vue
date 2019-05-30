@@ -6,9 +6,9 @@
         <div class="item-title-wrapper border-bottom">
           <div class="item-title">
             我的代理码
-            <a :href="agent.qrcode_uri">
-              <span class="save-button">保存二维码</span>
-            </a>
+            <!--<a :href="agent.qrcode_uri">-->
+              <!--<span class="save-button">保存二维码</span>-->
+            <!--</a>-->
           </div>
         </div>
         <div class="qr-code">
@@ -21,6 +21,7 @@
 
 <script>
   // import Header from "../common/Header"
+  import {getAgentQrcode} from 'api'
   export default {
     name: "Info",
     components: {
@@ -31,12 +32,22 @@
         qr_code: '',
         title: '我的代理信息',
         agent: {},
+        qrcode_uri: ''
       }
     },
     methods: {
       init() {
         this.agent = JSON.parse(localStorage.getItem('agent'))
-        // console.log(this.agent)
+        console.log(this.agent)
+        if (!this.agent.qrcode_uri) {
+          getAgentQrcode().then(res => {
+            this.qrcode_uri = res
+            this.agent.qrcode_uri = res
+            this.$forceUpdate()
+            localStorage.setItem('agent', JSON.stringify(this.agent))
+          })
+        }
+
       }
     },
     created() {

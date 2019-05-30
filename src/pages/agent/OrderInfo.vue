@@ -36,7 +36,7 @@
       <div class="contribute-wrapper">
         <div class="contribute-title border-bottom">项目投稿人</div>
         <div class="call-container">
-          <img :src="user.avatar.url" alt="">
+          <img :src="user.avatar ? user.avatar.url: ''" alt="">
           <div class="call-info-wrapper">
             <div class="name">{{user.name}}</div>
             <div class="phone">电话：{{user.phone}}</div>
@@ -85,10 +85,9 @@
           this.project = res.data.data
           let nodes = []
           for(let node of res.data.data.nodes) {
-            let d = new Date(node.created_at)
+            //let d = new Date(node.updated_at.replace(/-/g, "/"))
 
-            console.log(d.getFullYear())
-            node.created_at = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDay()
+            node.updated_at = node.updated_at.replace(/-/g, "/").substring(0,11)
             nodes.push(node)
           }
           this.nodes = nodes

@@ -9,7 +9,7 @@
             <span class="price">￥{{order.price}}</span>
           </div>
           <div class="people">
-            <img :src="order.user.avatar.url" alt="">
+            <img :src="order.user.avatar ? order.user.avatar.url : ''" alt="">
             <span class="name">{{order.user.name}}</span>
             <span class="goto-price" v-show="is_show">{{action_name}}
                 <img src="@/assets/img/arrow_right.png" alt="">
@@ -72,7 +72,7 @@
 
         let project_id = project ? project.id : ''
         if (this.$route.query.status == this.status_map.wait) {
-          this.$router.push('/agent/order/' + `${order_id}`)
+          this.$router.push('/agent/order/' + order_id + '?project_id=' + project_id )
           return;
         }
 

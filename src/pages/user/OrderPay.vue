@@ -11,7 +11,7 @@
           <div class="index-title">抄袭指数</div>
         </div>
         <div class="right">
-          <div class="word-number">{{review ? review.word_count : ''}}</div>
+          <div class="word-number">{{project.manuscripts && project.manuscripts[0] ? project.manuscripts[0].extra.word_count : ''}}</div>
           <div class="word">字数</div>
         </div>
       </div>
@@ -25,13 +25,14 @@
   // import Header from '../common/Header';
   import { MessageBox } from 'mint-ui';
   import wx from "weixin-js-sdk";
-  import {getUserOrder, orderPay} from 'api'
+  import {getUserOrder, orderPay, getWxconfig, getProject} from 'api'
   export default {
     name: "OrderPay",
     data() {
       return {
         project: {},
         order_id: '',
+        project_id: '',
         status: '',
         order: {},
         review: {},
@@ -69,18 +70,32 @@
         });
       },
       init() {
-        this.order_id = this.$route.query.order_id
+        this.project_id = this.$route.query.order_id
       },
       getOrder() {
-        getUserOrder(this.order_id).then(order => {
-          this.order = order
-          this.project = order.project
-          this.review = order.project.review
+        getProject(this.project_id).then(project => {
+          this.order = project.order
+          this.order_id = this.order.id
+          this.project = project
+          this.review = project.review
+        })
+      },
+      initWxConfig() {
+        let url = window.location.href.split('#')[0]
+        getWxconfig({url: url}).then(res => {
+          console.log(res)
+          wx.config(res);
+
+          //处理验证失败的信息
+          wx.error(function (res) {
+            console.log('验证失败返回的信息:', res);
+          });
         })
       }
     },
     created() {
       this.init();
+      this.initWxConfig()
       this.getOrder();
     },
   }

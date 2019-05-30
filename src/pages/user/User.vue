@@ -60,7 +60,7 @@
         },
         status: {
           pending: 2, //待付款
-          doing: 4, // 进行中
+          doing: 3,//encodeURIComponent(JSON.stringify([3,4])), // 进行中
           done: 5 // 已完成
         }
       }
@@ -75,8 +75,8 @@
           window.location.href = window.baseURL + '/m/auth/weixin/login'
         }
         let agent = localStorage.getItem('agent')
-        if (agent) {
-          // this.$router.push('/agent')
+        if (!!agent) {
+          this.$router.push('/agent')
         }
       }
     },

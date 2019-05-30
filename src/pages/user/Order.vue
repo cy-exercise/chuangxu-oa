@@ -55,24 +55,24 @@
         order_list: [],
         status_map: {
           2: 'wait',
-          4: 'doing',
-          5: 'done'
+          3: 'doing',
+          6: 'done'
         },
         status: ''
       }
     },
     methods: {
       handleRoute(item) {
-        if (this.status === 2) {
+        if (this.status == 2) {
 
-          this.$router.push(`/user/order/pay?order_id=${item.order.id}`)
+          this.$router.push(`/user/order/pay?order_id=${item.id}`)
         } else  {
 
           this.$router.push(this.action_url + `?project_id=${item.id}`)
         }
       },
       init(){
-        this.status = + this.$route.query.status;
+        this.status = this.$route.query.status;
         let status = this.status_map[this.status];
         if (this.url_map[status]) {
           this.action_url = this.url_map[status]
@@ -97,7 +97,7 @@
             return
           }
           this.order_list = projects
-          document.title = this.title_map[this.status_map[status]] + ` (${projects.length})`
+          document.title = this.title_map[this.status_map[this.status]] + ` (${projects.length})`
         })
       }
     },

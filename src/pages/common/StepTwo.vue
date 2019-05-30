@@ -4,9 +4,9 @@
       <div class="step-title">项目进度</div>
       <section v-for="node of nodes" :class="[{'current': node.status == 1}, {'complete': node.status == 2}, {'undo': node.status == 0}]">
         <span class="point-time"></span>
-        <time datetime="2013-03">
-          <span>{{node.created_at}}</span>
-        </time>
+        <div class="time">
+          <span>{{node.updated_at}}</span>
+        </div>
         <aside>
           <p class="things">{{node.workflow_node.title}}</p>
         </aside>
@@ -27,7 +27,7 @@
 <style scoped>
   .step-title {
     padding-top: .8rem;
-    margin-left: 24%;
+    margin-left: 21%;
     font-size: .3rem;
   }
   .step article {
@@ -75,7 +75,7 @@
     background: url("~@/assets/img/time.png");
     background-size:100% 100%;
   }
-  .step article section time {
+  .step article section .time {
     width: 40%;
     height: 100%;
     line-height: 56px;
@@ -90,11 +90,11 @@
   .step article aside p {
     text-align: left;
   }
-  .step article section time > span {
+  .step article section .time > span {
     display: block;
     text-align: right;
   }
-  article, section, time, aside {
+  article, section, aside {
     display: block;
   }
   .undo {

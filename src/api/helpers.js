@@ -2,8 +2,8 @@
 import { MessageBox } from 'mint-ui';
 
 const urlMap = {
-  development: 'http://cy123.natapp1.cc/api/',
-  production: 'https://www.chuangxu.cn/api/'
+  development: 'http://chuangxu.natapp4.cc/api/',
+  production: 'http://chuangxu.natapp4.cc/api/'
 }
 const baseUrl = urlMap[process.env.NODE_ENV]
 const ERR_OK = 200

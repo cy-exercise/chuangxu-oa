@@ -105,12 +105,17 @@
       },
       init() {
         this.user = JSON.parse(getStore('user'))
-        this.agent = JSON.parse(getStore('agent'))
+        let agent = JSON.parse(getStore('agent'))
+        if (!agent) {
+          this.$router.push('/user');
+        }
+        this.agent = agent
       },
       getProjects() {
         let params = {
           status: this.status.wait
         }
+        console.log(this.agent)
         getAgentOrders(this.agent.id, params).then(orders => {
           this.wait_have = orders.data.length
         })
